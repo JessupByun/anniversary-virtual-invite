@@ -114,7 +114,7 @@ function el(tag, attrs = {}, parent) { const e = document.createElementNS(NS, ta
    SCREEN NAV
    ============================================================ */
 function go(name) {
-  const cur = $('.screen.active'); const next = document.querySelector(`[data-screen="${name}"]`);
+  const cur = $('.screen.active'); const next = document.querySelector(`.screen[data-screen="${name}"]`);
   if (!next || cur === next) return;
   cur.classList.add('leaving');
   setTimeout(() => { cur.classList.remove('active', 'leaving'); next.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); state.screen = name; save(); document.body.dataset.screen = name; onEnter(name); }, 280);
@@ -460,6 +460,6 @@ $$('.her-name').forEach(e => e.textContent = CONFIG.herName); $$('.her-emoji').f
 document.title = `For ${CONFIG.herName} ${CONFIG.herEmoji}`;
 (function init() {
   const s = state.screen; document.body.dataset.screen = s || 'box';
-  if (s && s !== 'box' && s !== 'loading') { $('.screen.active').classList.remove('active'); document.querySelector(`[data-screen="${s}"]`).classList.add('active'); onEnter(s); }
-  else if (s === 'loading') { $('.screen.active').classList.remove('active'); document.querySelector('[data-screen="time"]').classList.add('active'); onEnter('time'); }
+  if (s && s !== 'box' && s !== 'loading') { $('.screen.active').classList.remove('active'); document.querySelector(`.screen[data-screen="${s}"]`).classList.add('active'); onEnter(s); }
+  else if (s === 'loading') { $('.screen.active').classList.remove('active'); document.querySelector('.screen[data-screen="time"]').classList.add('active'); onEnter('time'); }
 })();
