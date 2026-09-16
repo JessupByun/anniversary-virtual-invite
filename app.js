@@ -401,7 +401,7 @@ function runLoader() {
     p += 1.3 + Math.random() * 1.4; if (p > 99) p = 99;
     while (li < lines.length && p >= lines[li][0]) { txt.textContent = lines[li][1]; li++; }
     fill.style.width = p + '%'; pct.textContent = Math.floor(p) + '%';
-    if (p >= 99) { clearInterval(iv); setTimeout(() => { txt.textContent = 'just kidding. you\'re planning it.'; fill.style.width = '100%'; pct.textContent = '100%'; }, 1600); setTimeout(() => go('chapter'), 3300); }
+    if (p >= 99) { clearInterval(iv); setTimeout(() => { txt.innerHTML = 'I <span class="t-heart">♥</span> You!'; fill.style.width = '100%'; pct.textContent = '100%'; }, 1600); setTimeout(() => go('chapter'), 3300); }
   }, 120);
 }
 
