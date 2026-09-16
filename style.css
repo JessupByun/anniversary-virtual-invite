@@ -108,7 +108,7 @@ body[data-screen="box"] .wash { opacity: 1; }
 .gift-bow::after { right: 4px; transform: rotate(45deg) scaleX(-1); }
 .gift.open .gift-lid { transform: translate(-30px, -140px) rotate(-40deg); opacity: 0; }
 .gift-shadow { position: absolute; left: 30px; right: 30px; bottom: -4px; height: 14px; background: rgba(38,33,29,.18); border-radius: 50%; filter: blur(5px); }
-#btn-no.fleeing { position: fixed; z-index: 30; margin: 0; transition: left .55s cubic-bezier(.34,1.56,.64,1), top .55s cubic-bezier(.34,1.56,.64,1), transform .15s; }
+#btn-no.fleeing { position: fixed; z-index: 30; margin: 0; transition: left .6s cubic-bezier(.3,1.25,.5,1), top .6s cubic-bezier(.3,1.25,.5,1), transform .15s; }
 #btn-yes.grow { transform: scale(var(--grow, 1)); }
 
 /* Flowers */
@@ -242,6 +242,9 @@ body[data-screen="box"] .wash { opacity: 1; }
 .t-names { margin: 0; font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--ink); }
 .t-heart { color: var(--blush); font-style: normal; margin: 0 .1em; }
 .t-since { margin: 0; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+#rsvp-block, #after-rsvp { display: flex; flex-direction: column; align-items: center; gap: 18px; width: 100%; }
+#after-rsvp .btn-row, #rsvp-block .btn-row { margin-top: 0; }
+#after-rsvp .tiny-hint { margin: 0; }
 .send-row { width: 100%; }
 .send-row input { width: 100%; padding: 12px 16px; border-radius: 999px; border: 1.5px solid var(--line); font-family: var(--sans); font-size: 15px; outline: none; background: var(--card); color: var(--ink); }
 .send-row input:focus { border-color: var(--ink); }

@@ -14,8 +14,8 @@ const CONFIG = {
   closingLine: 'it\'s a date. three years down.',
   secretText: 'you found the secret heart. three years of you being the best part of my every day. — J',
   secretPhoto: 'img/album/p20.jpg',
-  secretCaption: 'chicha',
-  loaderPhoto: 'img/album/p21.jpg',
+  secretCaption: '',
+  loaderPhoto: 'img/album/loader.jpg',
   stampPhoto: 'img/album/p10.jpg',
 
   // Album — order matters. Captions are yours to rewrite.
@@ -158,13 +158,19 @@ function fireworks(rounds = 6) { let i = 0; const iv = setInterval(() => { burst
    ============================================================ */
 const btnNo = $('#btn-no'); const btnYes = $('#btn-yes'); let noTries = 0;
 const NO_LINES = ['nice try', 'the button is shy', 'it keeps running away, weird', 'i think it\'s a sign', 'ok just press the other one', 'yes is getting bigger for some reason', 'still no?', 'you can do this all day, so can it'];
-function flee() {
+let lastFlee = 0;
+function flee(e) {
+  const now = performance.now(); if (now - lastFlee < 650) return; lastFlee = now;
   if (!btnNo.classList.contains('fleeing')) { const r = btnNo.getBoundingClientRect(); btnNo.style.left = r.left + 'px'; btnNo.style.top = r.top + 'px'; btnNo.classList.add('fleeing'); void btnNo.offsetWidth; }
   noTries++;
-  const w = btnNo.offsetWidth, h = btnNo.offsetHeight; const cur = btnNo.getBoundingClientRect();
-  let x, y, tries = 0;
-  do { x = Math.random() * (innerWidth - w - 24) + 12; y = Math.random() * (innerHeight - h - 140) + 70; tries++; } while (tries < 10 && Math.hypot(x - cur.left, y - cur.top) < 140);
-  btnNo.style.left = x + 'px'; btnNo.style.top = y + 'px';
+  const w = btnNo.offsetWidth, h = btnNo.offsetHeight; const pad = 40;
+  const px = e && e.clientX != null ? e.clientX : innerWidth / 2, py = e && e.clientY != null ? e.clientY : innerHeight / 2;
+  let best = null, bestD = -1;
+  for (let i = 0; i < 6; i++) {
+    const x = pad + Math.random() * Math.max(1, innerWidth - w - pad * 2), y = 80 + Math.random() * Math.max(1, innerHeight - h - 80 - pad);
+    const d = Math.hypot(x + w / 2 - px, y + h / 2 - py); if (d > bestD) { bestD = d; best = { x, y }; }
+  }
+  btnNo.style.left = best.x + 'px'; btnNo.style.top = best.y + 'px';
   btnYes.style.setProperty('--grow', 1 + Math.min(noTries, 6) * .12); btnYes.classList.add('grow');
   $('#no-hint').textContent = NO_LINES[(noTries - 1) % NO_LINES.length];
 }
