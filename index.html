@@ -20,6 +20,7 @@
 <body>
   <canvas id="fx" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
+  <div class="wash" aria-hidden="true"><span></span><span></span><span></span></div>
 
   <button id="secret-heart" class="secret-heart" aria-label="a secret">♥</button>
 
@@ -28,7 +29,7 @@
     <!-- 0. THE BOX -->
     <section class="screen active" data-screen="box">
       <p class="eyebrow">hi <span class="her-name"></span> <span class="her-emoji"></span></p>
-      <h1 class="title">I made you<br><em>something.</em></h1>
+      <h1 class="title">Happy Early<br><em>Anniversary!</em></h1>
       <div class="gift" id="gift">
         <div class="gift-lid"><div class="gift-bow"></div></div>
         <div class="gift-body"><div class="gift-ribbon"></div></div>
@@ -49,8 +50,8 @@
         <svg id="bouquet" viewBox="0 0 400 560" preserveAspectRatio="xMidYMax meet" aria-label="a bouquet of flowers"></svg>
       </div>
       <div class="flower-note" id="flower-note">
-        <p class="serif-note">flowers for you, <span class="her-name"></span>.</p>
-        <p class="sub">these ones don't wilt. tap them.</p>
+        <p class="serif-note">peonies, tulips, ranunculus &amp; daisies<br>for you, <span class="her-name"></span>.</p>
+        <p class="sub">these ones don't wilt, but you'll get some that do soon as well.</p>
         <button class="btn primary" id="btn-flowers-next">keep going</button>
       </div>
     </section>
@@ -182,7 +183,7 @@
     <div class="modal-card">
       <div class="polaroid">
         <div class="polaroid-img" id="polaroid-img"></div>
-        <p class="caption">us, probably</p>
+        <p class="caption" id="secret-cap"></p>
       </div>
       <p id="secret-text"></p>
       <button class="btn primary" id="btn-secret-close">ok</button>

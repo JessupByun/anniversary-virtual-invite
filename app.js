@@ -13,24 +13,42 @@ const CONFIG = {
   fineprint: '',
   closingLine: 'it\'s a date. three years down.',
   secretText: 'you found the secret heart. three years of you being the best part of my every day. — J',
-  secretPhoto: 'img/album/p03.jpg',
-  loaderPhoto: 'img/album/p19.jpg',
+  secretPhoto: 'img/album/p20.jpg',
+  secretCaption: 'freshmen year photobooth',
+  loaderPhoto: 'img/album/p21.jpg',
   stampPhoto: 'img/album/p10.jpg',
 
   // Album — order matters. Captions are yours to rewrite.
   album: [
-    { src: 'img/album/p03.jpg', cap: 'the studio one' },
-    { src: 'img/album/p01.jpg', cap: 'santa monica, snacks first' },
+    { src: 'img/album/p03.jpg', cap: 'freshmen year photobooth' },
+    { src: 'img/album/p01.jpg', cap: 'santa monica spring picnic' },
     { src: 'img/album/p10.jpg', cap: 'standard procedure' },
-    { src: 'img/album/p05.jpg', cap: 'picnic day' },
-    { src: 'img/album/p12.jpg', cap: 'golden hour' },
-    { src: 'img/album/p28.jpg', cap: 'you + flowers' },
-    { src: 'img/album/p24.jpg', cap: 'the beach' },
-    { src: 'img/album/p22.jpg', cap: 'iced coffee on the grass' },
-    { src: 'img/album/p15.jpg', cap: 'shaved ice, obviously' },
-    { src: 'img/album/p16.jpg', cap: 'new york' },
-    { src: 'img/album/p26.jpg', cap: 'night walk' },
-    { src: 'img/album/p19.jpg', cap: 'sunset' },
+    { src: 'img/album/p12.jpg', cap: 'nyc summit one' },
+    { src: 'img/album/p28.jpg', cap: 'our first valentines' },
+    { src: 'img/album/p24.jpg', cap: 'SD beach' },
+    { src: 'img/album/p22.jpg', cap: 'the grove' },
+    { src: 'img/album/p02.jpg', cap: 'our first ever' },
+    { src: 'img/album/p16.jpg', cap: 'brooklyn' },
+    { src: 'img/album/p13.jpg', cap: 'USC adventures' },
+    { src: 'img/album/p19.jpg', cap: 'the getty' },
+    // — captions below are placeholders, rewrite them —
+    { src: 'img/album/p04.jpg', cap: 'caption me' },
+    { src: 'img/album/p05.jpg', cap: 'caption me' },
+    { src: 'img/album/p06.jpg', cap: 'caption me' },
+    { src: 'img/album/p07.jpg', cap: 'caption me' },
+    { src: 'img/album/p08.jpg', cap: 'caption me' },
+    { src: 'img/album/p09.jpg', cap: 'caption me' },
+    { src: 'img/album/p11.jpg', cap: 'caption me' },
+    { src: 'img/album/p14.jpg', cap: 'caption me' },
+    { src: 'img/album/p15.jpg', cap: 'caption me' },
+    { src: 'img/album/p17.jpg', cap: 'caption me' },
+    { src: 'img/album/p18.jpg', cap: 'caption me' },
+    { src: 'img/album/p20.jpg', cap: 'caption me' },
+    { src: 'img/album/p21.jpg', cap: 'caption me' },
+    { src: 'img/album/p23.jpg', cap: 'caption me' },
+    { src: 'img/album/p25.jpg', cap: 'caption me' },
+    { src: 'img/album/p26.jpg', cap: 'caption me' },
+    { src: 'img/album/p27.jpg', cap: 'caption me' },
   ],
 
   startTimes: [
@@ -47,10 +65,10 @@ const CONFIG = {
   chapters: [
     { id: 'latte', title: 'chapter 1 · morning coffee', question: 'first, caffeine. lattes from:',
       options: [
-        { id: 'damo', name: 'Damo', blurb: 'the good window seat and the oat latte that ruined all other oat lattes', favorite: true },
-        { id: 'cg', name: 'Community Goods', blurb: 'matcha, a pastry we "split", and pretending we\'re regulars' },
+        { id: 'damo', name: 'Damo', blurb: 'the OG #1', favorite: true },
+        { id: 'cg', name: 'Community Goods', blurb: 'the best in the world' },
       ] },
-    { id: 'brunch', title: 'chapter 2 · brunch', question: 'ok, real food.',
+    { id: 'brunch', title: 'chapter 2 · brunch', question: 'brunch spots.',
       options: [
         { id: 'republique', name: 'République', blurb: 'the pretty one on La Brea. we are getting the kouign-amann.', favorite: true },
         { id: 'greatwhite', name: 'Great White', blurb: 'venice, avocado toast that is actually worth the hype' },
@@ -101,7 +119,7 @@ function go(name) {
   const cur = $('.screen.active'); const next = document.querySelector(`[data-screen="${name}"]`);
   if (!next || cur === next) return;
   cur.classList.add('leaving');
-  setTimeout(() => { cur.classList.remove('active', 'leaving'); next.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); state.screen = name; save(); onEnter(name); }, 280);
+  setTimeout(() => { cur.classList.remove('active', 'leaving'); next.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); state.screen = name; save(); document.body.dataset.screen = name; onEnter(name); }, 280);
 }
 function onEnter(name) {
   if (name === 'flowers') growFlowers();
@@ -141,14 +159,16 @@ function fireworks(rounds = 6) { let i = 0; const iv = setInterval(() => { burst
    0. THE BOX
    ============================================================ */
 const btnNo = $('#btn-no'); const btnYes = $('#btn-yes'); let noTries = 0;
-const NO_LINES = ['nice try', 'the button is shy', 'it keeps running away, weird', 'i think it\'s a sign', 'ok just press the other one', 'yes is getting bigger for some reason'];
+const NO_LINES = ['nice try', 'the button is shy', 'it keeps running away, weird', 'i think it\'s a sign', 'ok just press the other one', 'yes is getting bigger for some reason', 'still no?', 'you can do this all day, so can it'];
 function flee() {
-  noTries++; btnNo.classList.add('fleeing');
-  const w = btnNo.offsetWidth, h = btnNo.offsetHeight;
-  btnNo.style.left = Math.random() * (innerWidth - w - 20) + 10 + 'px'; btnNo.style.top = Math.random() * (innerHeight - h - 120) + 60 + 'px';
+  if (!btnNo.classList.contains('fleeing')) { const r = btnNo.getBoundingClientRect(); btnNo.style.left = r.left + 'px'; btnNo.style.top = r.top + 'px'; btnNo.classList.add('fleeing'); void btnNo.offsetWidth; }
+  noTries++;
+  const w = btnNo.offsetWidth, h = btnNo.offsetHeight; const cur = btnNo.getBoundingClientRect();
+  let x, y, tries = 0;
+  do { x = Math.random() * (innerWidth - w - 24) + 12; y = Math.random() * (innerHeight - h - 140) + 70; tries++; } while (tries < 10 && Math.hypot(x - cur.left, y - cur.top) < 140);
+  btnNo.style.left = x + 'px'; btnNo.style.top = y + 'px';
   btnYes.style.setProperty('--grow', 1 + Math.min(noTries, 6) * .12); btnYes.classList.add('grow');
-  $('#no-hint').textContent = NO_LINES[Math.min(noTries - 1, NO_LINES.length - 1)];
-  if (noTries > 8) btnNo.style.display = 'none';
+  $('#no-hint').textContent = NO_LINES[(noTries - 1) % NO_LINES.length];
 }
 btnNo.addEventListener('pointerenter', flee);
 btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); flee(); }, { passive: false });
@@ -252,7 +272,7 @@ let flowersGrown = false;
 function growFlowers() {
   if (flowersGrown) return; flowersGrown = true;
   const svg = $('#bouquet'); svg.innerHTML = '';
-  const defs = el('defs', {}, svg);
+  let s; const defs = el('defs', {}, svg);
   const lg = el('linearGradient', { id: 'kraft', x1: 0, y1: 0, x2: 0, y2: 1 }, defs); el('stop', { offset: 0, 'stop-color': '#b98f5f' }, lg); el('stop', { offset: 1, 'stop-color': '#9c7448' }, lg);
   const lg2 = el('linearGradient', { id: 'kraft2', x1: 0, y1: 0, x2: 1, y2: 1 }, defs); el('stop', { offset: 0, 'stop-color': '#dcbd92' }, lg2); el('stop', { offset: 1, 'stop-color': '#c29d6b' }, lg2);
   grad(defs, 'coral', '#f6b19a', '#e0674f'); grad(defs, 'coralD', '#e88a72', '#c24f3b');
@@ -262,11 +282,27 @@ function growFlowers() {
   grad(defs, 'cream1', '#f7ead6', '#e2c9a5'); grad(defs, 'cream2', '#fdf5e9', '#eddbbf'); grad(defs, 'cream3', '#fffaf3', '#f5e8d3');
   grad(defs, 'ran1', '#ffe19a', '#f0b24a'); grad(defs, 'ran2', '#fff0c5', '#f7cf7a');
   grad(defs, 'blue1', '#c5d7e8', '#7d9cc0'); grad(defs, 'blue2', '#dde8f2', '#9db8d4');
+  grad(defs, 'lav1', '#d6c8ea', '#9a82c2'); grad(defs, 'lav2', '#ebe3f5', '#b9a6d8'); grad(defs, 'lavD', '#c3b1e0', '#7f66ad');
 
   wrapPaper(svg);
+  // far back layer (fills out the bouquet)
+  eucalyptus(svg, 44, 292, 0); eucalyptus(svg, 358, 300, .05); eucalyptus(svg, 150, 150, .1); eucalyptus(svg, 262, 130, .1);
+  s = stemTo(svg, 100, 148, .1); delphinium(svg, 100, 148, .1, 'url(#lav1)', 'url(#lav2)');
+  s = stemTo(svg, 322, 130, .15); delphinium(svg, 322, 130, .15, 'url(#lav2)', 'url(#lav1)');
+  s = stemTo(svg, 200, 96, .12); delphinium(svg, 200, 96, .12, 'url(#blue1)', 'url(#blue2)');
+  s = stemTo(svg, 124, 102, .2); tulip(svg, 124, 102, .2, 'url(#blushW)', 'url(#blushWD)');
+  s = stemTo(svg, 298, 100, .22); tulip(svg, 298, 100, .22, 'url(#lav2)', 'url(#lavD)');
+  s = stemTo(svg, 232, 122, .28); tulip(svg, 232, 122, .28, 'url(#coral)', 'url(#coralD)');
+  s = stemTo(svg, 58, 262, .35); peony(svg, 58, 262, .35, 'url(#peony2)', 'url(#peony3)', 'url(#peony1)', .8);
+  s = stemTo(svg, 346, 268, .38); peony(svg, 346, 268, .38, 'url(#cream1)', 'url(#cream2)', 'url(#cream3)', .8);
+  s = stemTo(svg, 156, 226, .42); daisy(svg, 156, 226, .42, '#fffdf9', '#f0c75e', .8);
+  s = stemTo(svg, 250, 236, .45); daisy(svg, 250, 236, .45, '#fffaf3', '#e9b94c', .8);
+  s = stemTo(svg, 96, 300, .48, '#7d8f6a', 2); babysBreath(svg, 96, 300, .48);
+  s = stemTo(svg, 300, 350, .5, '#7d8f6a', 2); babysBreath(svg, 300, 350, .5);
+  s = stemTo(svg, 150, 292, .52, '#7d8f6a', 2); babysBreath(svg, 150, 292, .52);
+  s = stemTo(svg, 262, 200, .3); ranunculus(svg, 262, 200, .3, 'url(#lav2)', 'url(#lav1)', .8);
   // back layer
   eucalyptus(svg, 88, 236, 0); eucalyptus(svg, 318, 222, .1);
-  let s;
   s = stemTo(svg, 140, 132, .15); delphinium(svg, 140, 132, .15, 'url(#blue1)', 'url(#blue2)');
   s = stemTo(svg, 284, 150, .25); delphinium(svg, 284, 150, .25, 'url(#blue2)', 'url(#blue1)');
   s = stemTo(svg, 62, 322, .5, '#7d8f6a', 2); babysBreath(svg, 62, 322, .5);
@@ -418,14 +454,14 @@ $('#btn-save').addEventListener('click', async () => {
 let heartTaps = 0;
 $('#secret-heart').addEventListener('click', (e) => {
   heartTaps++; burst(e.clientX, e.clientY, 10, 3, .1, ['#e4a49a', '#f0c75e']);
-  if (heartTaps >= 3) { heartTaps = 0; $('#secret-text').textContent = CONFIG.secretText; $('#polaroid-img').innerHTML = `<img src="${CONFIG.secretPhoto}" alt="" />`; $('#secret-modal').classList.remove('hidden'); }
+  if (heartTaps >= 3) { heartTaps = 0; $('#secret-text').textContent = CONFIG.secretText; $('#polaroid-img').innerHTML = `<img src="${CONFIG.secretPhoto}" alt="" />`; $('#secret-cap').textContent = CONFIG.secretCaption; $('#secret-modal').classList.remove('hidden'); }
 });
 $('#btn-secret-close').addEventListener('click', () => $('#secret-modal').classList.add('hidden'));
 let footTaps = 0; $('#foot').addEventListener('click', () => { if (++footTaps >= 5) { localStorage.removeItem(STORE_KEY); location.href = location.pathname; } });
 $$('.her-name').forEach(e => e.textContent = CONFIG.herName); $$('.her-emoji').forEach(e => e.textContent = CONFIG.herEmoji); $$('.your-name').forEach(e => e.textContent = CONFIG.yourName);
 document.title = `For ${CONFIG.herName} ${CONFIG.herEmoji}`;
 (function init() {
-  const s = state.screen;
+  const s = state.screen; document.body.dataset.screen = s || 'box';
   if (s && s !== 'box' && s !== 'loading') { $('.screen.active').classList.remove('active'); document.querySelector(`[data-screen="${s}"]`).classList.add('active'); onEnter(s); }
   else if (s === 'loading') { $('.screen.active').classList.remove('active'); document.querySelector('[data-screen="time"]').classList.add('active'); onEnter('time'); }
 })();
