@@ -39,6 +39,11 @@ body {
 
 .wash { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity .8s; }
 body[data-screen="box"] .wash, body[data-screen="ticket"] .wash { opacity: 1; }
+body[data-screen="ticket"] .wash span { opacity: .85; filter: blur(50px); }
+body[data-screen="ticket"] .wash span:nth-child(1) { top: -10vw; left: -25vw; }
+body[data-screen="ticket"] .wash span:nth-child(2) { bottom: 5vh; right: -25vw; }
+body[data-screen="ticket"] .wash span:nth-child(3) { top: 30%; left: 55%; }
+body[data-screen="ticket"] .wash span:nth-child(4) { top: 55%; left: -20vw; }
 .wash span { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .55; animation: drift 16s ease-in-out infinite alternate; }
 .wash span:nth-child(1) { width: 70vw; height: 70vw; background: #f2cfc8; top: -25vw; left: -20vw; }
 .wash span:nth-child(2) { width: 60vw; height: 60vw; background: #b7cbe0; bottom: -20vw; right: -20vw; animation-delay: -6s; }
