@@ -11,7 +11,7 @@ const CONFIG = {
   date: { prefix: 'Friday, October', crossedOut: '20', actual: '16', year: '2026' },
   dateShort: 'Oct 16, 2026',
   fineprint: '',
-  closingLine: 'it\'s a date. three years down.',
+  closingLine: 'three years down… many more to come.',
   secretText: 'you found the secret heart. three years of you being the best part of my every day. — J',
   secretPhoto: 'img/album/p20.jpg',
   secretCaption: '',
@@ -158,22 +158,33 @@ function fireworks(rounds = 6) { let i = 0; const iv = setInterval(() => { burst
    ============================================================ */
 const btnNo = $('#btn-no'); const btnYes = $('#btn-yes'); let noTries = 0;
 const NO_LINES = ['nice try', 'the button is shy', 'it keeps running away, weird', 'i think it\'s a sign', 'ok just press the other one', 'yes is getting bigger for some reason', 'still no?', 'you can do this all day, so can it'];
-let lastFlee = 0;
+// The "no" button: on first touch it is re-parented to <body> (so no ancestor transform can
+// throw off position: fixed), then hops with a small JS spring that is clamped to the viewport.
+let lastFlee = 0, noPos = { x: 0, y: 0 }, noAnim = null;
+function noBounds() { const w = btnNo.offsetWidth, h = btnNo.offsetHeight, pad = 24; return { minX: pad, maxX: innerWidth - w - pad, minY: 70, maxY: innerHeight - h - pad, w, h }; }
+function placeNo(x, y) { const b = noBounds(); noPos.x = Math.min(Math.max(x, b.minX), b.maxX); noPos.y = Math.min(Math.max(y, b.minY), b.maxY); btnNo.style.transform = `translate(${noPos.x}px, ${noPos.y}px)`; }
+function hopTo(tx, ty) {
+  cancelAnimationFrame(noAnim);
+  const sx = noPos.x, sy = noPos.y, t0 = performance.now(), dur = 620;
+  const ease = (t) => 1 + 2.4 * Math.pow(t - 1, 3) + 1.4 * Math.pow(t - 1, 2); // soft overshoot, settles at 1
+  const step = (now) => { const t = Math.min(1, (now - t0) / dur); const e = ease(t); placeNo(sx + (tx - sx) * e, sy + (ty - sy) * e); if (t < 1) noAnim = requestAnimationFrame(step); };
+  noAnim = requestAnimationFrame(step);
+}
 function flee(e) {
-  const now = performance.now(); if (now - lastFlee < 650) return; lastFlee = now;
-  if (!btnNo.classList.contains('fleeing')) { const r = btnNo.getBoundingClientRect(); btnNo.style.left = r.left + 'px'; btnNo.style.top = r.top + 'px'; btnNo.classList.add('fleeing'); void btnNo.offsetWidth; }
+  const now = performance.now(); if (now - lastFlee < 700) return; lastFlee = now;
+  if (!btnNo.classList.contains('fleeing')) { const r = btnNo.getBoundingClientRect(); document.body.appendChild(btnNo); btnNo.classList.add('fleeing'); placeNo(r.left, r.top); }
   noTries++;
-  const w = btnNo.offsetWidth, h = btnNo.offsetHeight; const pad = 40;
-  const px = e && e.clientX != null ? e.clientX : innerWidth / 2, py = e && e.clientY != null ? e.clientY : innerHeight / 2;
+  const b = noBounds(); const px = e && e.clientX != null ? e.clientX : innerWidth / 2, py = e && e.clientY != null ? e.clientY : innerHeight / 2;
   let best = null, bestD = -1;
-  for (let i = 0; i < 6; i++) {
-    const x = pad + Math.random() * Math.max(1, innerWidth - w - pad * 2), y = 80 + Math.random() * Math.max(1, innerHeight - h - 80 - pad);
-    const d = Math.hypot(x + w / 2 - px, y + h / 2 - py); if (d > bestD) { bestD = d; best = { x, y }; }
+  for (let i = 0; i < 8; i++) {
+    const x = b.minX + Math.random() * Math.max(1, b.maxX - b.minX), y = b.minY + Math.random() * Math.max(1, b.maxY - b.minY);
+    const d = Math.hypot(x + b.w / 2 - px, y + b.h / 2 - py); if (d > bestD) { bestD = d; best = { x, y }; }
   }
-  btnNo.style.left = best.x + 'px'; btnNo.style.top = best.y + 'px';
+  hopTo(best.x, best.y);
   btnYes.style.setProperty('--grow', 1 + Math.min(noTries, 6) * .12); btnYes.classList.add('grow');
   $('#no-hint').textContent = NO_LINES[(noTries - 1) % NO_LINES.length];
 }
+addEventListener('resize', () => { if (btnNo.classList.contains('fleeing')) placeNo(noPos.x, noPos.y); });
 btnNo.addEventListener('pointerenter', flee);
 btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); flee(); }, { passive: false });
 btnNo.addEventListener('click', (e) => { e.preventDefault(); flee(); });
@@ -384,10 +395,10 @@ $('#btn-time-next').addEventListener('click', () => go('loading'));
    ============================================================ */
 function runLoader() {
   const fill = $('#bar-fill'), pct = $('#loader-pct'), txt = $('#loader-text'); $('#loader-photo').style.backgroundImage = `url(${CONFIG.loaderPhoto})`;
-  const lines = [[0, 'loading your boyfriend\'s plans…'], [25, 'consulting yelp…'], [50, 'checking reservations…'], [75, 'ironing a shirt…'], [99, 'hmm.']];
+  const lines = [[0, 'loading your boyfriend\'s plans…'], [20, 'now that i came to LA, u have to visit me in pittsburgh'], [40, 'i hope your feet don\'t smell like kombucha'], [60, 'when are we going to japan?'], [80, 'thanks for being the best gf in the whole world'], [99, 'hmm.']];
   let p = 0, li = 0; fill.style.width = '0%';
   const iv = setInterval(() => {
-    p += 3 + Math.random() * 4; if (p > 99) p = 99;
+    p += 1.3 + Math.random() * 1.4; if (p > 99) p = 99;
     while (li < lines.length && p >= lines[li][0]) { txt.textContent = lines[li][1]; li++; }
     fill.style.width = p + '%'; pct.textContent = Math.floor(p) + '%';
     if (p >= 99) { clearInterval(iv); setTimeout(() => { txt.textContent = 'just kidding. you\'re planning it.'; fill.style.width = '100%'; pct.textContent = '100%'; }, 1600); setTimeout(() => go('chapter'), 3300); }
@@ -443,11 +454,11 @@ function renderTicket() {
 }
 function afterRsvp() { $('#rsvp-block').classList.add('hidden'); $('#after-rsvp').classList.remove('hidden'); $('#closing-line').textContent = CONFIG.closingLine; }
 $('#btn-rsvp').addEventListener('click', () => { state.rsvp = true; save(); fireworks(7); afterRsvp(); });
-function plainItinerary() { const lines = itinerary().map((o, i) => `${i + 1}. ${o.chapter}: ${o.name}${o.time ? ' @ ' + o.time : ''}`); return `${CONFIG.herName} RSVP'd YES.\n\nThird Anniversary Date\n${CONFIG.date.prefix} ${CONFIG.date.actual}, ${CONFIG.date.year} · ${CONFIG.city}\nWe leave: ${timeLabel()}\n\n${lines.join('\n')}\n`; }
-$('#btn-send').addEventListener('click', () => { const her = $('#her-email').value.trim(); location.href = `mailto:${CONFIG.yourEmail}${her ? '?cc=' + encodeURIComponent(her) + '&' : '?'}subject=${encodeURIComponent(CONFIG.herName + ' said yes — our third anniversary date')}&body=${encodeURIComponent(plainItinerary())}`; });
+function plainItinerary() { const lines = itinerary().map((o, i) => `${i + 1}. ${o.chapter}: ${o.name}${o.time ? ' @ ' + o.time : ''}`); return `${CONFIG.herName} RSVP'd YES.\n\nYear 3 Anniversary\n${CONFIG.date.prefix} ${CONFIG.date.actual}, ${CONFIG.date.year} · ${CONFIG.city}\nWe leave: ${timeLabel()}\n\n${lines.join('\n')}\n`; }
+$('#btn-send').addEventListener('click', () => { const her = $('#her-email').value.trim(); location.href = `mailto:${CONFIG.yourEmail}${her ? '?cc=' + encodeURIComponent(her) + '&' : '?'}subject=${encodeURIComponent(CONFIG.herName + ' said yes — year 3 anniversary date')}&body=${encodeURIComponent(plainItinerary())}`; });
 $('#btn-save').addEventListener('click', async () => {
   const b = $('#btn-save'); b.textContent = 'saving…';
-  try { if (!window.html2canvas) throw new Error('no html2canvas'); const canvas = await html2canvas($('#ticket'), { backgroundColor: '#f4ede2', scale: 3, useCORS: true }); const a = document.createElement('a'); a.download = 'our-third-anniversary.png'; a.href = canvas.toDataURL('image/png'); a.click(); b.textContent = 'saved'; }
+  try { if (!window.html2canvas) throw new Error('no html2canvas'); const canvas = await html2canvas($('#ticket'), { backgroundColor: '#f4ede2', scale: 3, useCORS: true }); const a = document.createElement('a'); a.download = 'year-3-anniversary.png'; a.href = canvas.toDataURL('image/png'); a.click(); b.textContent = 'saved'; }
   catch (e) { b.textContent = 'screenshot it instead'; }
   setTimeout(() => b.textContent = 'save ticket', 2500);
 });
@@ -458,7 +469,7 @@ $('#btn-save').addEventListener('click', async () => {
 let heartTaps = 0;
 $('#secret-heart').addEventListener('click', (e) => {
   heartTaps++; burst(e.clientX, e.clientY, 10, 3, .1, ['#e4a49a', '#f0c75e']);
-  if (heartTaps >= 3) { heartTaps = 0; $('#secret-text').textContent = CONFIG.secretText; $('#polaroid-img').innerHTML = `<img src="${CONFIG.secretPhoto}" alt="" />`; $('#secret-cap').textContent = CONFIG.secretCaption; $('#secret-modal').classList.remove('hidden'); }
+  if (heartTaps >= 1) { heartTaps = 0; $('#secret-text').textContent = CONFIG.secretText; $('#polaroid-img').innerHTML = `<img src="${CONFIG.secretPhoto}" alt="" />`; $('#secret-cap').textContent = CONFIG.secretCaption; $('#secret-modal').classList.remove('hidden'); }
 });
 $('#btn-secret-close').addEventListener('click', () => $('#secret-modal').classList.add('hidden'));
 let footTaps = 0; $('#foot').addEventListener('click', () => { if (++footTaps >= 5) { localStorage.removeItem(STORE_KEY); location.href = location.pathname; } });

@@ -45,7 +45,6 @@ body[data-screen="box"] .wash { opacity: 1; }
 .wash span:nth-child(3) { width: 45vw; height: 45vw; background: #d9cfe8; top: 45%; left: 60%; animation-delay: -11s; }
 .wash span:nth-child(4) { width: 55vw; height: 55vw; background: #f7e3a6; top: 30%; left: -25vw; animation-delay: -3s; opacity: .7; }
 @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(5vw, 4vw) scale(1.12); } }
-.screen[data-screen="box"] .title em { background: linear-gradient(transparent 62%, #d9cfe8 62%, #d9cfe8 92%, transparent 92%); }
 
 #app {
   position: relative; z-index: 1; display: grid; place-items: center; grid-template-columns: minmax(0, 1fr);
@@ -108,7 +107,7 @@ body[data-screen="box"] .wash { opacity: 1; }
 .gift-bow::after { right: 4px; transform: rotate(45deg) scaleX(-1); }
 .gift.open .gift-lid { transform: translate(-30px, -140px) rotate(-40deg); opacity: 0; }
 .gift-shadow { position: absolute; left: 30px; right: 30px; bottom: -4px; height: 14px; background: rgba(38,33,29,.18); border-radius: 50%; filter: blur(5px); }
-#btn-no.fleeing { position: fixed; z-index: 30; margin: 0; transition: left .6s cubic-bezier(.3,1.25,.5,1), top .6s cubic-bezier(.3,1.25,.5,1), transform .15s; }
+#btn-no.fleeing { position: fixed; z-index: 30; margin: 0; left: 0; top: 0; will-change: transform; transition: none; }
 #btn-yes.grow { transform: scale(var(--grow, 1)); }
 
 /* Flowers */
@@ -190,7 +189,7 @@ body[data-screen="box"] .wash { opacity: 1; }
 .loader { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
 .loader-photo { width: 96px; height: 96px; border-radius: 50%; background-size: cover; background-position: center; box-shadow: 0 0 0 4px var(--paper), 0 0 0 5.5px var(--ink); animation: spin-slow 6s linear infinite; }
 @keyframes spin-slow { to { transform: rotate(360deg); } }
-.loader-text { margin: 0; font-family: var(--serif); font-style: italic; font-size: 19px; min-height: 1.4em; color: var(--ink-soft); }
+.loader-text { margin: 0; font-family: var(--serif); font-style: italic; font-size: 19px; min-height: 2.8em; line-height: 1.35; color: var(--ink-soft); max-width: 30ch; }
 .bar { width: 100%; max-width: 280px; height: 10px; background: var(--paper-2); border-radius: 999px; overflow: hidden; border: 1px solid var(--line); }
 .bar-fill { height: 100%; width: 0%; background: var(--ink); transition: width .25s; border-radius: 999px; }
 .loader-pct { margin: 0; font-size: 12px; letter-spacing: .12em; color: var(--muted); }
