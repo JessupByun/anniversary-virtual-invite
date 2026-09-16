@@ -1,14 +1,19 @@
-# For Yunji ❤️🍀 — 3 Year Anniversary Invite
+# For Yunji ❤️🍀 — Third Anniversary Invite
 
 A tiny interactive "gift" web app. No build step, no backend: `index.html` + `style.css` + `app.js`.
 
 ## Edit the content
 
 Everything personal lives in the `CONFIG` block at the top of `app.js`:
-names, emails, date text, the start-time options, the six itinerary chapters (2 options each),
-the locked Lawry's dinner, the closing line, and the secret-heart message.
+names, emails, the date (with the crossed-out 20 → 16), the start-time options, the six itinerary chapters (2 options each),
+the locked Lawry's dinner, the album photos and captions, the closing line, and the secret-heart message.
 
-- Drop a photo named `photo.jpg` in this folder to show it in the secret-heart modal (tap the 💗 in the corner 3 times).
+- **Photos:** drop originals in `photos/` (git-ignored), then run the resize command below to produce web-sized copies in `img/album/`. The album order and captions are the `album` list in CONFIG. `secretPhoto`, `loaderPhoto` and `stampPhoto` pick which photos appear in the secret-heart modal (tap ♥ in the corner 3 times), the loading screen, and the ticket stamp.
+- **Place photos:** each option shows `img/places/<option id>.jpg`. Replace any of them with your own shot. Sources and licenses for the Wikimedia Commons ones are in `img/places/CREDITS.md`.
+
+```bash
+i=0; for f in photos/*; do i=$((i+1)); sips -s format jpeg -s formatOptions 78 -Z 1400 "$f" --out "$(printf "img/album/p%02d.jpg" $i)" >/dev/null; done
+```
 - `favorite: true` on an option is where "🎲 pick for me" lands.
 - `decoy: true` makes a fake choice that snaps back to the `locked` option.
 

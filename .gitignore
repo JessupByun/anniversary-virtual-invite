@@ -1,2 +1,4 @@
 .DS_Store
 .claude/
+# original full-size photos stay local; web-sized copies live in img/album
+photos/
