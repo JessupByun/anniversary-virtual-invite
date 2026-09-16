@@ -14,7 +14,7 @@ const CONFIG = {
   closingLine: 'it\'s a date. three years down.',
   secretText: 'you found the secret heart. three years of you being the best part of my every day. — J',
   secretPhoto: 'img/album/p20.jpg',
-  secretCaption: 'freshmen year photobooth',
+  secretCaption: 'chicha',
   loaderPhoto: 'img/album/p21.jpg',
   stampPhoto: 'img/album/p10.jpg',
 
@@ -42,7 +42,6 @@ const CONFIG = {
     { src: 'img/album/p15.jpg', cap: 'our first ever' },
     { src: 'img/album/p17.jpg', cap: 'me n angelines dino' },
     { src: 'img/album/p18.jpg', cap: 'grad surprise party (ty)' },
-    { src: 'img/album/p20.jpg', cap: 'chicha' },
     { src: 'img/album/p21.jpg', cap: 'brentwood bacio' },
     { src: 'img/album/p23.jpg', cap: 'old memories' },
     { src: 'img/album/p25.jpg', cap: 'my 19th birthday gift' },
