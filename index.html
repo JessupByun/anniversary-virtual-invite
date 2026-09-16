@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+  <title>For Yunji ❤️🍀</title>
+  <meta name="description" content="A little gift." />
+  <meta name="theme-color" content="#fff3f6" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="For Yunji" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="bg-blobs" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <button id="secret-heart" class="secret-heart" aria-label="a secret">💗</button>
+
+  <main id="app">
+
+    <!-- 0. THE BOX -->
+    <section class="screen active" data-screen="box">
+      <p class="eyebrow">hi <span class="her-name"></span> <span class="her-emoji"></span></p>
+      <h1 class="title">I made you<br>something.</h1>
+      <div class="gift" id="gift">
+        <div class="gift-lid"><div class="gift-bow"></div></div>
+        <div class="gift-body"><div class="gift-ribbon"></div></div>
+        <div class="gift-shadow"></div>
+      </div>
+      <p class="prompt">do you want to see your gift?</p>
+      <div class="btn-row" id="box-buttons">
+        <button class="btn primary" id="btn-yes">yes!!</button>
+        <button class="btn ghost" id="btn-no">no</button>
+      </div>
+      <p class="tiny-hint" id="no-hint"></p>
+    </section>
+
+    <!-- 1. FLOWERS -->
+    <section class="screen" data-screen="flowers">
+      <div class="petals" id="petals" aria-hidden="true"></div>
+      <div class="bouquet-wrap">
+        <svg id="bouquet" viewBox="0 0 400 520" preserveAspectRatio="xMidYMax meet" aria-label="a bouquet of flowers"></svg>
+      </div>
+      <div class="flower-note" id="flower-note">
+        <p class="handwritten">flowers for you, <span class="her-name"></span></p>
+        <p class="sub">(these ones don't wilt. tap them.)</p>
+        <button class="btn primary" id="btn-flowers-next">keep going →</button>
+      </div>
+    </section>
+
+    <!-- 2. THE INVITE -->
+    <section class="screen" data-screen="invite">
+      <p class="eyebrow">you've got mail</p>
+      <div class="envelope" id="envelope">
+        <div class="env-flap"></div>
+        <div class="env-letter">
+          <p class="letter-title">you're invited</p>
+          <p class="letter-body">to our <strong>3 year anniversary</strong> date</p>
+          <p class="letter-date" id="letter-date"></p>
+          <p class="letter-fine" id="letter-fine"></p>
+        </div>
+        <div class="env-front"></div>
+        <div class="env-seal">💌</div>
+      </div>
+      <p class="prompt" id="env-hint">tap the envelope</p>
+      <div class="btn-row hidden" id="invite-buttons">
+        <button class="btn primary" id="btn-invite-next">ok i'm in →</button>
+      </div>
+    </section>
+
+    <!-- 3. START TIME -->
+    <section class="screen" data-screen="time">
+      <p class="eyebrow">step 1 of 2</p>
+      <h2 class="title sm">when should I<br>pick you up?</h2>
+      <div class="clock" id="clock">
+        <div class="clock-face">
+          <div class="hand hour" id="hand-hour"></div>
+          <div class="hand minute" id="hand-minute"></div>
+          <div class="clock-center"></div>
+        </div>
+      </div>
+      <div class="time-grid" id="time-grid"></div>
+      <p class="time-label" id="time-label">pick a time ↑</p>
+      <div class="btn-row">
+        <button class="btn primary" id="btn-time-next" disabled>lock it in →</button>
+      </div>
+    </section>
+
+    <!-- 4. FAKE LOADING -->
+    <section class="screen" data-screen="loading">
+      <div class="loader">
+        <div class="loader-emoji" id="loader-emoji">🧑‍💻</div>
+        <p class="loader-text" id="loader-text">loading your boyfriend's plans…</p>
+        <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+        <p class="loader-pct" id="loader-pct">0%</p>
+      </div>
+    </section>
+
+    <!-- 5. CHAPTERS (rendered by JS) -->
+    <section class="screen" data-screen="chapter">
+      <div class="dots" id="dots"></div>
+      <p class="eyebrow" id="ch-title"></p>
+      <h2 class="title sm" id="ch-question"></h2>
+      <div class="options" id="options"></div>
+      <div class="toast" id="toast"></div>
+      <div class="btn-row split">
+        <button class="btn ghost" id="btn-shuffle">🎲 pick for me</button>
+        <button class="btn primary" id="btn-ch-next" disabled>next →</button>
+      </div>
+    </section>
+
+    <!-- 6. THE TICKET -->
+    <section class="screen" data-screen="ticket">
+      <p class="eyebrow">your day, assembled</p>
+      <div class="ticket" id="ticket">
+        <div class="ticket-head">
+          <div>
+            <p class="t-label">admit two</p>
+            <p class="t-title">3 Year Anniversary Date</p>
+          </div>
+          <div class="t-stamp">❤️🍀</div>
+        </div>
+        <div class="ticket-meta">
+          <div><p class="t-label">date</p><p class="t-val" id="t-date"></p></div>
+          <div><p class="t-label">pick up</p><p class="t-val" id="t-time"></p></div>
+          <div><p class="t-label">city</p><p class="t-val" id="t-city"></p></div>
+        </div>
+        <div class="ticket-tear"></div>
+        <ol class="ticket-list" id="t-list"></ol>
+        <div class="ticket-tear"></div>
+        <div class="ticket-foot">
+          <p class="t-label">guest of honor</p>
+          <p class="t-guest"><span class="her-name"></span> <span class="her-emoji"></span></p>
+          <p class="t-barcode" aria-hidden="true">▌▌▌ ▌▌ ▌▌▌▌ ▌ ▌▌ ▌▌▌ ▌ ▌▌▌▌ ▌▌</p>
+        </div>
+      </div>
+
+      <div id="rsvp-block">
+        <div class="btn-row">
+          <button class="btn primary big" id="btn-rsvp">RSVP: yes!! 💌</button>
+        </div>
+        <p class="tiny-hint">(there is no "no" button. we checked.)</p>
+      </div>
+
+      <div id="after-rsvp" class="hidden">
+        <p class="handwritten big-hand" id="closing-line"></p>
+        <div class="send-row">
+          <input type="email" id="her-email" placeholder="your email (optional, for a copy)" autocomplete="email" />
+        </div>
+        <div class="btn-row split">
+          <button class="btn ghost" id="btn-save">💾 save ticket</button>
+          <button class="btn primary" id="btn-send">📨 send to <span class="your-name"></span></button>
+        </div>
+        <p class="tiny-hint">see you on the 16th.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="modal hidden" id="secret-modal">
+    <div class="modal-card">
+      <div class="polaroid">
+        <div class="polaroid-img" id="polaroid-img">📸</div>
+        <p class="handwritten">us, probably</p>
+      </div>
+      <p id="secret-text"></p>
+      <button class="btn primary" id="btn-secret-close">ok 🥹</button>
+    </div>
+  </div>
+
+  <footer class="foot" id="foot">made with ❤️ by <span class="your-name"></span></footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
