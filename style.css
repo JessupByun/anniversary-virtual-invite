@@ -70,6 +70,8 @@ body[data-screen="ticket"] .wash span:nth-child(4) { top: 55%; left: -20vw; }
 /* Type */
 .eyebrow { margin: 0 0 -8px; font-family: var(--sans); font-weight: 500; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
 .eyebrow .her-name, .eyebrow .her-emoji { text-transform: none; letter-spacing: 0; font-size: 13px; }
+.eyebrow.greeting { font-size: 15px; letter-spacing: .14em; }
+.eyebrow.greeting .her-emoji { font-size: 16px; }
 .title { margin: 0; font-family: var(--serif); font-weight: 500; font-size: clamp(38px, 10vw, 50px); line-height: 1.02; letter-spacing: -.01em; color: var(--ink); font-variation-settings: 'opsz' 144; }
 .title.sm { font-size: clamp(28px, 7.5vw, 34px); }
 .title em { font-style: italic; font-weight: 400; background: linear-gradient(transparent 62%, var(--butter-soft) 62%, var(--butter-soft) 92%, transparent 92%); padding: 0 .06em; }
