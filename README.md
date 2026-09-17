@@ -1,26 +1,39 @@
-# For Yunji ❤️🍀 — Year 3 Anniversary Invite
+# Anniversary Virtual Invite
 
-A small interactive invite. No build step, no backend: `index.html` + `style.css` + `app.js`.
+An interactive, mobile-first invitation built as a single static page. No framework, no build step, no backend: `index.html`, `style.css`, `app.js`.
 
-## Flow
+**Live:** https://jessupbyun.github.io/anniversary-virtual-invite/
 
-gift box → bouquet → photo album → envelope (Oct ~~20~~ 16) → "when should we leave?" → loading bar → 8 chapters → ticket → RSVP.
+## What it does
 
-Every chapter except dessert is locked: tapping the alternative shakes the card, shows a message, and confirms the real stop. Dessert is a genuine three-way pick.
+A guided, one-screen-at-a-time flow. The recipient opens a gift, receives an animated bouquet, swipes through a photo album, opens an envelope, picks a departure time, sits through a fake loading bar, and then "builds" the date itinerary by choosing between options. Most stops are already decided; picking the alternative triggers a shake, a message, and the real stop is confirmed instead. One chapter is a genuine choice. The result is assembled into a ticket that can be saved as an image or emailed.
 
-## Edit the content
+## Technical highlights
 
-Everything personal lives in the `CONFIG` block at the top of `app.js`: names, email, the date, the start-time options, the album (order + captions), the chapters (stops, decoys, blurbs, teasing lines), the loader lines, the closing line, and the secret-heart photo.
+- **Vanilla stack.** Plain HTML/CSS/JS, one external library (html2canvas from a CDN) for the save-as-PNG export.
+- **Content-driven.** All copy, options, decoys, photos, and captions live in one `CONFIG` object at the top of `app.js`. Chapters render from data, so adding a stop or a third option means editing the config, not the markup.
+- **Screen router.** A small `go()` state machine swaps `<section>` screens with enter/leave animations, guards against double-taps mid-transition, and persists progress to `localStorage` so a closed tab resumes where it left off.
+- **Procedural SVG bouquet.** Tulips, peonies, ranunculus, daisies, delphinium, baby's breath, eucalyptus and a kraft wrap are generated in JS from path/gradient primitives. Stems draw in with `stroke-dashoffset`, blooms scale in on a staggered timeline, and each flower is tappable.
+- **Canvas particle system.** Confetti and fireworks run on a fixed `<canvas>` with a lightweight `requestAnimationFrame` loop that stops itself when idle.
+- **"No" button that can't be caught.** Re-parented to `<body>` on first hover so no ancestor transform can affect it, then moved with a clamped JS spring so it always stays inside the viewport.
+- **Envelope reveal with a scratched-out date.** An SVG stroke draws through the old date and a handwritten replacement pops in, sequenced with CSS keyframes.
+- **Editorial design system.** Fraunces + DM Sans, a warm paper palette with drifting color washes, a grain overlay, and a ticket layout with tear lines. Mobile-first with safe-area insets, `100dvh`, and scroll-snap for the album.
+- **PWA-ish.** Web manifest and Apple touch icon so "Add to Home Screen" opens it full-screen with its own icon.
+- **Cache busting.** `?v=` query strings on the script and stylesheet so phones pick up new deploys immediately.
 
-- **Album photos** are web-sized copies in `img/album/`. Originals stay in `photos/` (git-ignored).
-- **Place photos** are `img/places/<option id>.jpg`. Drop in a new file with the same name to replace one. Credits for the few Wikimedia Commons shots are in `img/places/CREDITS.md`.
-- After editing, bump the `?v=` number on the `app.js` / `style.css` links in `index.html` so phones don't keep the old version cached.
+## Structure
 
-To add a photo: put the original in `photos/`, then
-
-```bash
-python3 -c "from PIL import Image, ImageOps; im=ImageOps.exif_transpose(Image.open('photos/NAME.jpg')).convert('RGB'); im.thumbnail((1400,1400)); im.save('img/album/NAME.jpg', quality=78)"
 ```
+index.html            screens (sections) + templates
+style.css             design tokens, layout, animations
+app.js                CONFIG, router, bouquet generator, particles, chapter logic, ticket
+img/album/            web-sized photos for the album
+img/places/           one photo per itinerary option (<option id>.jpg)
+manifest.webmanifest  PWA manifest
+icon.svg / icon-512   app icon
+```
+
+Original full-size photos are kept out of the repo (`photos/` is git-ignored); the web copies are resized with Pillow to a 1400px long edge.
 
 ## Run locally
 
@@ -28,19 +41,12 @@ python3 -c "from PIL import Image, ImageOps; im=ImageOps.exif_transpose(Image.op
 python3 -m http.server 5173
 ```
 
-Open http://localhost:5173. Add `?reset` to the URL to start over (or tap the footer 5 times).
+Open http://localhost:5173. Append `?reset` to clear saved progress.
 
-## Deploy (GitHub Pages)
+## Deploy
 
-Repo: https://github.com/JessupByun/anniversary-virtual-invite
+GitHub Pages, deploy-from-branch (`main`, root). Every push to `main` rebuilds the site.
 
-Settings → Pages → Source: "Deploy from a branch" → `main` / `/ (root)` → Save.
-Live at https://jessupbyun.github.io/anniversary-virtual-invite/ about a minute later. Every `git push` redeploys.
+## Credits
 
-## On her phone
-
-Open the link in Safari → Share → **Add to Home Screen**. It gets its own icon and opens full-screen.
-
-## Her answers
-
-After RSVP: **save ticket** downloads the ticket as a PNG; **send to Jessup** opens her mail app with the itinerary pre-filled to `yourEmail` in CONFIG.
+A few placeholder venue photos come from Wikimedia Commons under CC licenses; attributions are in `img/places/CREDITS.md`.
