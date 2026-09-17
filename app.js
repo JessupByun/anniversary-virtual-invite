@@ -82,39 +82,39 @@ const CONFIG = {
       ] },
     { id: 'walk', title: 'chapter 2 · a walk', question: 'somewhere to wander after coffee.',
       options: [
-        { id: 'melrose', name: 'Melrose', blurb: 'the pink wall, thrift stores, one very long walk', locked: true, favorite: true },
-        { id: 'rodeo', name: 'Rodeo Drive', blurb: 'window shopping we can\'t afford', decoy: true, decoyText: 'nope. we\'re walking Melrose.' },
+        { id: 'melrose', name: 'Melrose', blurb: 'should we buy some more madhappy?', locked: true, favorite: true },
+        { id: 'rodeo', name: 'Rodeo Drive', blurb: 'is it time for a chanel purse?', decoy: true, decoyText: 'nope. we\'re walking Melrose.' },
       ] },
     { id: 'lunch', title: 'chapter 3 · lunch', question: 'lunch spots.', tease: 'you\'re doing great. it really feels like you\'re choosing, right?',
       options: [
-        { id: 'kazunori', name: 'KazuNori', blurb: 'hand rolls at the counter. no talking until the toro.', locked: true, favorite: true },
-        { id: 'neighborly', name: 'Neighborly', blurb: 'brentwood, the pretty counter, the good bread', decoy: true, decoyText: 'tempting. but it\'s KazuNori. you knew that.' },
+        { id: 'kazunori', name: 'KazuNori', blurb: 'delicious handrolls 🤤', locked: true, favorite: true },
+        { id: 'neighborly', name: 'Neighborly', blurb: 'you can\'t go wrong', decoy: true, decoyText: 'tempting. but it\'s KazuNori. you knew that.' },
       ] },
     { id: 'museum', title: 'chapter 4 · afternoon', question: 'a museum.', tease: 'fun fact: you have picked exactly zero things so far.',
       options: [
-        { id: 'academy', name: 'Academy Museum', blurb: 'of motion pictures. the sphere, the oscars, all of it.', locked: true, favorite: true },
-        { id: 'lacma', name: 'LACMA', blurb: 'urban light, right next door', decoy: true, decoyText: 'so close. it\'s the Academy Museum. still not a choice.' },
+        { id: 'academy', name: 'Academy Museum', blurb: 'new spot!', locked: true, favorite: true },
+        { id: 'lacma', name: 'LACMA', blurb: 'old spot, and i already have a sticker', decoy: true, decoyText: 'so close. it\'s the Academy Museum. still not a choice.' },
       ] },
     { id: 'stroll', title: 'chapter 5 · golden hour', question: 'a little stroll before dinner.', tease: 'at this point the buttons are decorative.',
       options: [
-        { id: 'grove', name: 'The Grove', blurb: 'the trolley, the fountain, the farmers market', locked: true, favorite: true },
-        { id: 'americana', name: 'The Americana', blurb: 'the grove, but glendale', decoy: true, decoyText: 'nope. the Grove. you can keep trying though, it\'s cute.' },
+        { id: 'grove', name: 'The Grove', blurb: 'my UCLA classic', locked: true, favorite: true },
+        { id: 'americana', name: 'The Americana', blurb: 'your hometown classic', decoy: true, decoyText: 'nope. the Grove. you can keep trying though, it\'s cute.' },
       ] },
     { id: 'dinner', title: 'chapter 6 · dinner', question: 'and for dinner…', tease: 'we both know how this one ends.',
       options: [
-        { id: 'lawrys', name: 'Lawry\'s The Prime Rib', blurb: 'the silver cart. the spinning salad bowl. the yorkshire pudding.', time: '6:30 pm', locked: true, favorite: true },
+        { id: 'lawrys', name: 'Lawry\'s The Prime Rib', blurb: 'thick cuts of prime rib & giant armchairs', time: '6:30 pm', locked: true, favorite: true },
         { id: 'other', name: 'Somewhere else?', blurb: 'surely there are other options…', decoy: true, noPhoto: true, decoyText: 'nope. reservation\'s already made. Lawry\'s, 6:30.' },
       ] },
     { id: 'dessert', title: 'chapter 7 · dessert in k-town', question: 'this one is actually your call.', tease: 'no really. a real choice. i checked.',
       options: [
-        { id: 'bingsoo', name: 'Bingsoo', favorite: true },
-        { id: 'icecream', name: 'Ice cream' },
-        { id: 'drink', name: 'Drink' },
+        { id: 'bingsoo', name: 'Bingsoo', blurb: 'oakobing or sul & beans or anko', favorite: true },
+        { id: 'icecream', name: 'Ice cream', blurb: 'bumsan, holy rolly, matsu matcha' },
+        { id: 'drink', name: 'Drink', blurb: '3cat?? i want the mochi mango' },
       ] },
     { id: 'night', title: 'chapter 8 · night drive', question: 'one last view before we call it.', tease: 'last one. (still not a choice.)',
       options: [
-        { id: 'figueroa', name: 'Figueroa & Centennial', blurb: 'the DTLA skyline, windows down, our playlist', locked: true, favorite: true },
-        { id: 'griffith', name: 'Griffith Observatory', blurb: 'the classic. and the parking.', decoy: true, decoyText: 'nope. Figueroa. trust me on this one.' },
+        { id: 'figueroa', name: 'Figueroa & Centennial', blurb: 'i always wanted to go here', locked: true, favorite: true },
+        { id: 'griffith', name: 'Griffith Observatory', blurb: 'we\'ve been here plenty', decoy: true, decoyText: 'nope. Figueroa. trust me on this one.' },
       ] },
   ],
 };
@@ -420,7 +420,7 @@ $('#btn-time-next').addEventListener('click', () => go('loading'));
    ============================================================ */
 function runLoader() {
   const fill = $('#bar-fill'), pct = $('#loader-pct'), txt = $('#loader-text'); $('#loader-photo').style.backgroundImage = `url(${CONFIG.loaderPhoto})`;
-  const lines = [[0, 'loading your boyfriend\'s plans…'], [20, 'now that i came to LA, u have to visit me in pittsburgh'], [40, 'i hope your feet don\'t smell like kombucha'], [60, 'when are we going to japan?'], [80, 'thanks for being the best gf in the whole world'], [99, 'hmm.']];
+  const lines = [[0, 'loading your boyfriend\'s plans…'], [20, 'now that i came to LA, u have to visit me in pittsburgh'], [40, 'researching all the yummy spots'], [60, 'when are we going to japan?'], [80, 'thanks for being the best gf in the whole world']];
   let p = 0, li = 0; fill.style.width = '0%';
   const iv = setInterval(() => {
     p += 1.3 + Math.random() * 1.4; if (p > 99) p = 99;
