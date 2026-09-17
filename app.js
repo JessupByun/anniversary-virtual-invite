@@ -111,7 +111,7 @@ const CONFIG = {
         { id: 'icecream', name: 'Ice cream', blurb: 'bumsan, holy rolly, matsu matcha' },
         { id: 'drink', name: 'Drink', blurb: '3cat?? i want the mochi mango' },
       ] },
-    { id: 'night', title: 'chapter 8 · night drive', question: 'one last view before we call it.', tease: 'last one. (still not a choice.)',
+    { id: 'night', title: 'chapter 8 · night drive', question: 'one last view before i go back 😢', tease: 'a beautiful end to our busy busy day',
       options: [
         { id: 'figueroa', name: 'Figueroa & Centennial', blurb: 'i always wanted to go here', locked: true, favorite: true },
         { id: 'griffith', name: 'Griffith Observatory', blurb: 'we\'ve been here plenty', decoy: true, decoyText: 'nope. Figueroa. trust me on this one.' },
