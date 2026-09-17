@@ -68,7 +68,7 @@ body[data-screen="ticket"] .wash span:nth-child(4) { top: 55%; left: -20vw; }
 .hidden { display: none !important; }
 
 /* Type */
-.eyebrow { margin: 0 0 -8px; font-family: var(--sans); font-weight: 500; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.eyebrow { margin: 0 0 -8px; font-family: var(--sans); font-weight: 500; font-size: 12px; letter-spacing: .18em; text-transform: none; color: var(--muted); }
 .eyebrow .her-name, .eyebrow .her-emoji { text-transform: none; letter-spacing: 0; font-size: 13px; }
 .greeting { margin: 0 0 -6px; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 22px; letter-spacing: .01em; color: var(--ink-soft); font-variation-settings: 'opsz' 144, 'SOFT' 100; }
 .greeting .her-emoji { font-style: normal; font-size: 18px; margin-left: .15em; }
@@ -258,7 +258,7 @@ body[data-screen="ticket"] .wash span:nth-child(4) { top: 55%; left: -20vw; }
 .ticket-foot { padding: 16px 20px 18px; display: flex; flex-direction: column; gap: 2px; align-items: center; }
 .t-names { margin: 0; font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--ink); }
 .t-heart { color: var(--blush); font-style: normal; margin: 0 .1em; }
-.t-since { margin: 0; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.t-since { margin: 0; font-size: 10px; letter-spacing: .18em; text-transform: none; color: var(--muted); }
 #rsvp-block, #after-rsvp { display: flex; flex-direction: column; align-items: center; gap: 18px; width: 100%; }
 #after-rsvp .btn-row, #rsvp-block .btn-row { margin-top: 0; }
 #after-rsvp .tiny-hint { margin: 0; }
@@ -274,7 +274,7 @@ body[data-screen="ticket"] .wash span:nth-child(4) { top: 55%; left: -20vw; }
 .modal-card .polaroid { width: 230px; transform: rotate(-3deg); cursor: default; }
 .modal-card p { margin: 0; font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
 
-.foot { position: relative; z-index: 1; height: 44px; line-height: 44px; padding-bottom: env(safe-area-inset-bottom); text-align: center; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.foot { position: relative; z-index: 1; height: 44px; line-height: 44px; padding-bottom: env(safe-area-inset-bottom); text-align: center; font-size: 11px; letter-spacing: .12em; text-transform: none; color: var(--muted); }
 
 @media (min-width: 700px) {
   .screen { max-width: 480px; }
