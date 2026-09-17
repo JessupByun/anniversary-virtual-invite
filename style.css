@@ -220,6 +220,8 @@ body[data-screen="ticket"] .wash span:nth-child(4) { top: 55%; left: -20vw; }
 .option.locked::after { content: 'confirmed'; background: var(--sage-deep); color: #fff; }
 .option.shake { animation: shake .4s ease-in-out 2; }
 .option.highlight { outline-color: var(--butter); }
+.tease { margin: -12px 0 0; font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--muted); max-width: 32ch; }
+.tease:empty { display: none; }
 /* three-way choice */
 .options.three { grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .options.three .option { padding: 6px 6px 10px; border-radius: 14px; }

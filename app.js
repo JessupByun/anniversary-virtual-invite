@@ -82,34 +82,39 @@ const CONFIG = {
       ] },
     { id: 'walk', title: 'chapter 2 · a walk', question: 'somewhere to wander after coffee.',
       options: [
-        { id: 'melrose', name: 'Melrose', blurb: 'thrift stores, murals, and one very long walk', locked: true, favorite: true },
+        { id: 'melrose', name: 'Melrose', blurb: 'the pink wall, thrift stores, one very long walk', locked: true, favorite: true },
         { id: 'rodeo', name: 'Rodeo Drive', blurb: 'window shopping we can\'t afford', decoy: true, decoyText: 'nope. we\'re walking Melrose.' },
       ] },
-    { id: 'lunch', title: 'chapter 3 · lunch', question: 'lunch spots.',
+    { id: 'lunch', title: 'chapter 3 · lunch', question: 'lunch spots.', tease: 'you\'re doing great. it really feels like you\'re choosing, right?',
       options: [
         { id: 'kazunori', name: 'KazuNori', blurb: 'hand rolls at the counter. no talking until the toro.', locked: true, favorite: true },
-        { id: 'jonvinnys', name: 'Jon & Vinny\'s', blurb: 'the spicy fusilli, obviously', decoy: true, decoyText: 'tempting. but it\'s KazuNori.' },
+        { id: 'neighborly', name: 'Neighborly', blurb: 'brentwood, the pretty counter, the good bread', decoy: true, decoyText: 'tempting. but it\'s KazuNori. you knew that.' },
       ] },
-    { id: 'museum', title: 'chapter 4 · afternoon', question: 'a museum.',
+    { id: 'museum', title: 'chapter 4 · afternoon', question: 'a museum.', tease: 'fun fact: you have picked exactly zero things so far.',
       options: [
         { id: 'academy', name: 'Academy Museum', blurb: 'of motion pictures. the sphere, the oscars, all of it.', locked: true, favorite: true },
-        { id: 'lacma', name: 'LACMA', blurb: 'urban light, right next door', decoy: true, decoyText: 'so close. it\'s the Academy Museum.' },
+        { id: 'lacma', name: 'LACMA', blurb: 'urban light, right next door', decoy: true, decoyText: 'so close. it\'s the Academy Museum. still not a choice.' },
       ] },
-    { id: 'stroll', title: 'chapter 5 · golden hour', question: 'a little stroll before dinner.',
+    { id: 'stroll', title: 'chapter 5 · golden hour', question: 'a little stroll before dinner.', tease: 'at this point the buttons are decorative.',
       options: [
         { id: 'grove', name: 'The Grove', blurb: 'the trolley, the fountain, the farmers market', locked: true, favorite: true },
-        { id: 'americana', name: 'The Americana', blurb: 'the grove, but glendale', decoy: true, decoyText: 'nope. the Grove.' },
+        { id: 'americana', name: 'The Americana', blurb: 'the grove, but glendale', decoy: true, decoyText: 'nope. the Grove. you can keep trying though, it\'s cute.' },
       ] },
-    { id: 'dinner', title: 'chapter 6 · dinner', question: 'and for dinner…',
+    { id: 'dinner', title: 'chapter 6 · dinner', question: 'and for dinner…', tease: 'we both know how this one ends.',
       options: [
         { id: 'lawrys', name: 'Lawry\'s The Prime Rib', blurb: 'the silver cart. the spinning salad bowl. the yorkshire pudding.', time: '6:30 pm', locked: true, favorite: true },
         { id: 'other', name: 'Somewhere else?', blurb: 'surely there are other options…', decoy: true, noPhoto: true, decoyText: 'nope. reservation\'s already made. Lawry\'s, 6:30.' },
       ] },
-    { id: 'dessert', title: 'chapter 7 · dessert in k-town', question: 'this one is actually your call.',
+    { id: 'dessert', title: 'chapter 7 · dessert in k-town', question: 'this one is actually your call.', tease: 'no really. a real choice. i checked.',
       options: [
-        { id: 'bingsoo', name: 'Bingsoo', blurb: 'shaved ice, the usual', favorite: true },
-        { id: 'icecream', name: 'Ice cream', blurb: 'two scoops, we share (i lie)' },
-        { id: 'drink', name: 'A drink', blurb: 'warm or iced, you pick' },
+        { id: 'bingsoo', name: 'Bingsoo', blurb: 'oakobing, the usual', favorite: true },
+        { id: 'icecream', name: 'Ice cream', blurb: 'matcha soft serve at matsu' },
+        { id: 'drink', name: 'A drink', blurb: '3CAT, warm or iced' },
+      ] },
+    { id: 'night', title: 'chapter 8 · night drive', question: 'one last view before we call it.', tease: 'last one. (still not a choice.)',
+      options: [
+        { id: 'figueroa', name: 'Figueroa & Centennial', blurb: 'the DTLA skyline, windows down, our playlist', locked: true, favorite: true },
+        { id: 'griffith', name: 'Griffith Observatory', blurb: 'the classic. and the parking.', decoy: true, decoyText: 'nope. Figueroa. trust me on this one.' },
       ] },
   ],
 };
@@ -434,7 +439,7 @@ function optImg(o) { return o.noPhoto ? `<div class="opt-img"><span class="q">?<
 function renderChapter() {
   const ch = CONFIG.chapters[state.chapter]; if (!ch) { go('ticket'); return; }
   $('#dots').innerHTML = CONFIG.chapters.map((_, i) => `<span class="dot ${i < state.chapter ? 'done' : ''} ${i === state.chapter ? 'now' : ''}"></span>`).join('');
-  $('#ch-title').textContent = ch.title; $('#ch-question').textContent = ch.question;
+  $('#ch-title').textContent = ch.title; $('#ch-question').textContent = ch.question; $('#ch-tease').textContent = ch.tease || '';
   const wrap = $('#options'); wrap.innerHTML = ''; wrap.classList.toggle('three', ch.options.length > 2); $('#toast').classList.remove('show');
   ch.options.forEach(o => {
     const d = document.createElement('div'); d.className = 'option'; d.dataset.id = o.id;
