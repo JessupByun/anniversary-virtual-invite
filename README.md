@@ -1,21 +1,26 @@
-# For Yunji ❤️🍀 — Third Anniversary Invite
+# For Yunji ❤️🍀 — Year 3 Anniversary Invite
 
-A tiny interactive "gift" web app. No build step, no backend: `index.html` + `style.css` + `app.js`.
+A small interactive invite. No build step, no backend: `index.html` + `style.css` + `app.js`.
+
+## Flow
+
+gift box → bouquet → photo album → envelope (Oct ~~20~~ 16) → "when should we leave?" → loading bar → 8 chapters → ticket → RSVP.
+
+Every chapter except dessert is locked: tapping the alternative shakes the card, shows a message, and confirms the real stop. Dessert is a genuine three-way pick.
 
 ## Edit the content
 
-Everything personal lives in the `CONFIG` block at the top of `app.js`:
-names, emails, the date (with the crossed-out 20 → 16), the start-time options, the six itinerary chapters (2 options each),
-the locked Lawry's dinner, the album photos and captions, the closing line, and the secret-heart message.
+Everything personal lives in the `CONFIG` block at the top of `app.js`: names, email, the date, the start-time options, the album (order + captions), the chapters (stops, decoys, blurbs, teasing lines), the loader lines, the closing line, and the secret-heart photo.
 
-- **Photos:** drop originals in `photos/` (git-ignored), then run the resize command below to produce web-sized copies in `img/album/`. The album order and captions are the `album` list in CONFIG. `secretPhoto`, `loaderPhoto` and `stampPhoto` pick which photos appear in the secret-heart modal (tap ♥ in the corner 3 times), the loading screen, and the ticket stamp.
-- **Place photos:** each option shows `img/places/<option id>.jpg`. Replace any of them with your own shot. Sources and licenses for the Wikimedia Commons ones are in `img/places/CREDITS.md`.
+- **Album photos** are web-sized copies in `img/album/`. Originals stay in `photos/` (git-ignored).
+- **Place photos** are `img/places/<option id>.jpg`. Drop in a new file with the same name to replace one. Credits for the few Wikimedia Commons shots are in `img/places/CREDITS.md`.
+- After editing, bump the `?v=` number on the `app.js` / `style.css` links in `index.html` so phones don't keep the old version cached.
+
+To add a photo: put the original in `photos/`, then
 
 ```bash
-i=0; for f in photos/*; do i=$((i+1)); sips -s format jpeg -s formatOptions 78 -Z 1400 "$f" --out "$(printf "img/album/p%02d.jpg" $i)" >/dev/null; done
+python3 -c "from PIL import Image, ImageOps; im=ImageOps.exif_transpose(Image.open('photos/NAME.jpg')).convert('RGB'); im.thumbnail((1400,1400)); im.save('img/album/NAME.jpg', quality=78)"
 ```
-- `favorite: true` on an option is where "🎲 pick for me" lands.
-- `decoy: true` makes a fake choice that snaps back to the `locked` option.
 
 ## Run locally
 
@@ -23,33 +28,19 @@ i=0; for f in photos/*; do i=$((i+1)); sips -s format jpeg -s formatOptions 78 -
 python3 -m http.server 5173
 ```
 
-Then open http://localhost:5173. Add `?reset` to the URL to wipe saved progress
-(or tap the "made with ❤️" footer 5 times).
+Open http://localhost:5173. Add `?reset` to the URL to start over (or tap the footer 5 times).
 
-## Deploy to GitHub Pages
+## Deploy (GitHub Pages)
 
-1. Create a new repo on GitHub (public on a free plan; Pages on private repos needs GitHub Pro).
-2. In this folder:
-   ```bash
-   git remote add origin https://github.com/<you>/<repo>.git
-   git push -u origin main
-   ```
-3. On GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: main / (root) → Save**.
-4. After a minute the site is live at `https://<you>.github.io/<repo>/`.
+Repo: https://github.com/JessupByun/trilogy-invite
 
-Every later change is just `git add -A && git commit -m "tweak" && git push`.
+Settings → Pages → Source: "Deploy from a branch" → `main` / `/ (root)` → Save.
+Live at https://jessupbyun.github.io/trilogy-invite/ about a minute later. Every `git push` redeploys.
 
-## Make it feel like an app on her iPhone
+## On her phone
 
-Open the link in Safari → Share → **Add to Home Screen**. It gets its own icon
-(`icon-512.png`) and opens full-screen without the browser bar.
+Open the link in Safari → Share → **Add to Home Screen**. It gets its own icon and opens full-screen.
 
-## How you get her answers
+## Her answers
 
-When she taps **RSVP: yes!!** the ticket appears with two buttons:
-- **save ticket** downloads the ticket as a PNG.
-- **send to Jessup** opens her mail app with the full itinerary pre-filled to `yourEmail` in CONFIG
-  (cc'd to her if she typed her email).
-
-If you later want it fully automatic (no mail app), swap the `btn-send` handler for a
-`fetch()` POST to a free [Formspree](https://formspree.io) endpoint.
+After RSVP: **save ticket** downloads the ticket as a PNG; **send to Jessup** opens her mail app with the itinerary pre-filled to `yourEmail` in CONFIG.

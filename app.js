@@ -138,11 +138,12 @@ function el(tag, attrs = {}, parent) { const e = document.createElementNS(NS, ta
 /* ============================================================
    SCREEN NAV
    ============================================================ */
+let navBusy = false;
 function go(name) {
   const cur = $('.screen.active'); const next = document.querySelector(`.screen[data-screen="${name}"]`);
-  if (!next || cur === next) return;
-  cur.classList.add('leaving');
-  setTimeout(() => { cur.classList.remove('active', 'leaving'); next.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); state.screen = name; save(); document.body.dataset.screen = name; onEnter(name); }, 280);
+  if (!next || cur === next || navBusy) return;
+  navBusy = true; cur.classList.add('leaving');
+  setTimeout(() => { cur.classList.remove('active', 'leaving'); next.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); state.screen = name; save(); document.body.dataset.screen = name; navBusy = false; onEnter(name); }, 280);
 }
 function onEnter(name) {
   if (name === 'flowers') growFlowers();
@@ -418,7 +419,9 @@ $('#btn-time-next').addEventListener('click', () => go('loading'));
 /* ============================================================
    5. FAKE LOADER
    ============================================================ */
+let loaderRunning = false;
 function runLoader() {
+  if (loaderRunning) return; loaderRunning = true;
   const fill = $('#bar-fill'), pct = $('#loader-pct'), txt = $('#loader-text'); $('#loader-photo').style.backgroundImage = `url(${CONFIG.loaderPhoto})`;
   const lines = [[0, 'loading your boyfriend\'s plans…'], [20, 'now that i came to LA, u have to visit me in pittsburgh'], [40, 'researching all the yummy spots'], [60, 'newdle is thinking....'], [80, 'thanks for being the best gf in the whole world']];
   let p = 0, li = 0; fill.style.width = '0%';
@@ -426,7 +429,7 @@ function runLoader() {
     p += 1.3 + Math.random() * 1.4; if (p > 99) p = 99;
     while (li < lines.length && p >= lines[li][0]) { txt.textContent = lines[li][1]; li++; }
     fill.style.width = p + '%'; pct.textContent = Math.floor(p) + '%';
-    if (p >= 99) { clearInterval(iv); setTimeout(() => { txt.innerHTML = 'I <span class="t-heart">♥</span> You!'; fill.style.width = '100%'; pct.textContent = '100%'; }, 1600); setTimeout(() => go('chapter'), 3300); }
+    if (p >= 99) { clearInterval(iv); setTimeout(() => { txt.innerHTML = 'I <span class="t-heart">♥</span> You!'; fill.style.width = '100%'; pct.textContent = '100%'; }, 1600); setTimeout(() => { loaderRunning = false; go('chapter'); }, 3300); }
   }, 120);
 }
 
@@ -464,7 +467,7 @@ $('#btn-shuffle').addEventListener('click', () => {
   const ch = CONFIG.chapters[state.chapter]; const els = $$('.option'); const real = ch.options.filter(o => !o.decoy); const target = real.find(o => o.favorite) || real[(Math.random() * real.length) | 0];
   let n = 0; const iv = setInterval(() => { els.forEach(e => e.classList.remove('highlight')); els[n % els.length].classList.add('highlight'); n++; if (n > 7) { clearInterval(iv); els.forEach(e => e.classList.remove('highlight')); selectOption(ch, target); toast('the dice have spoken.'); } }, 130);
 });
-$('#btn-ch-next').addEventListener('click', () => { if (!state.picks[CONFIG.chapters[state.chapter].id]) return; state.chapter++; save(); if (state.chapter >= CONFIG.chapters.length) go('ticket'); else renderChapter(); });
+$('#btn-ch-next').addEventListener('click', () => { if (!state.picks[CONFIG.chapters[state.chapter].id]) return; $('#btn-ch-next').disabled = true; state.chapter++; save(); if (state.chapter >= CONFIG.chapters.length) go('ticket'); else renderChapter(); });
 
 /* ============================================================
    7. TICKET
