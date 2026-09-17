@@ -32,10 +32,10 @@ Open http://localhost:5173. Add `?reset` to the URL to start over (or tap the fo
 
 ## Deploy (GitHub Pages)
 
-Repo: https://github.com/JessupByun/trilogy-invite
+Repo: https://github.com/JessupByun/anniversary-virtual-invite
 
 Settings → Pages → Source: "Deploy from a branch" → `main` / `/ (root)` → Save.
-Live at https://jessupbyun.github.io/trilogy-invite/ about a minute later. Every `git push` redeploys.
+Live at https://jessupbyun.github.io/anniversary-virtual-invite/ about a minute later. Every `git push` redeploys.
 
 ## On her phone
 
