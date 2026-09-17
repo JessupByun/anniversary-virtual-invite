@@ -420,7 +420,7 @@ $('#btn-time-next').addEventListener('click', () => go('loading'));
    ============================================================ */
 function runLoader() {
   const fill = $('#bar-fill'), pct = $('#loader-pct'), txt = $('#loader-text'); $('#loader-photo').style.backgroundImage = `url(${CONFIG.loaderPhoto})`;
-  const lines = [[0, 'loading your boyfriend\'s plans…'], [20, 'now that i came to LA, u have to visit me in pittsburgh'], [40, 'researching all the yummy spots'], [60, 'when are we going to japan?'], [80, 'thanks for being the best gf in the whole world']];
+  const lines = [[0, 'loading your boyfriend\'s plans…'], [20, 'now that i came to LA, u have to visit me in pittsburgh'], [40, 'researching all the yummy spots'], [60, 'newdle is thinking....'], [80, 'thanks for being the best gf in the whole world']];
   let p = 0, li = 0; fill.style.width = '0%';
   const iv = setInterval(() => {
     p += 1.3 + Math.random() * 1.4; if (p > 99) p = 99;
