@@ -107,9 +107,9 @@ const CONFIG = {
       ] },
     { id: 'dessert', title: 'chapter 7 · dessert in k-town', question: 'this one is actually your call.', tease: 'no really. a real choice. i checked.',
       options: [
-        { id: 'bingsoo', name: 'Bingsoo', blurb: 'oakobing, the usual', favorite: true },
-        { id: 'icecream', name: 'Ice cream', blurb: 'matcha soft serve at matsu' },
-        { id: 'drink', name: 'A drink', blurb: '3CAT, warm or iced' },
+        { id: 'bingsoo', name: 'Bingsoo', favorite: true },
+        { id: 'icecream', name: 'Ice cream' },
+        { id: 'drink', name: 'Drink' },
       ] },
     { id: 'night', title: 'chapter 8 · night drive', question: 'one last view before we call it.', tease: 'last one. (still not a choice.)',
       options: [
@@ -443,7 +443,7 @@ function renderChapter() {
   const wrap = $('#options'); wrap.innerHTML = ''; wrap.classList.toggle('three', ch.options.length > 2); $('#toast').classList.remove('show');
   ch.options.forEach(o => {
     const d = document.createElement('div'); d.className = 'option'; d.dataset.id = o.id;
-    d.innerHTML = `${optImg(o)}<p class="opt-name">${o.name}</p><p class="opt-blurb">${o.blurb}</p>${o.time ? `<span class="opt-time">${o.time}</span>` : ''}`;
+    d.innerHTML = `${optImg(o)}<p class="opt-name">${o.name}</p>${o.blurb ? `<p class="opt-blurb">${o.blurb}</p>` : ''}${o.time ? `<span class="opt-time">${o.time}</span>` : ''}`;
     if (state.picks[ch.id] === o.id) d.classList.add(o.locked ? 'locked' : 'selected');
     d.addEventListener('click', () => pickOption(ch, o, d)); wrap.appendChild(d);
   });
