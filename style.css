@@ -220,6 +220,15 @@ body[data-screen="ticket"] .wash span:nth-child(4) { top: 55%; left: -20vw; }
 .option.locked::after { content: 'confirmed'; background: var(--sage-deep); color: #fff; }
 .option.shake { animation: shake .4s ease-in-out 2; }
 .option.highlight { outline-color: var(--butter); }
+/* three-way choice */
+.options.three { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.options.three .option { padding: 6px 6px 10px; border-radius: 14px; }
+.options.three .opt-img { border-radius: 10px; }
+.options.three .opt-name { font-size: 14px; margin: 8px 2px 0; }
+.options.three .opt-blurb { font-size: 11px; margin: 3px 2px 0; }
+.options.three .option.selected::after { top: 10px; right: 10px; font-size: 10px; padding: 3px 7px; }
+.t-from { margin: -6px 0 12px; padding: 0 20px; font-size: 12px; font-style: italic; color: var(--muted); }
+.t-from:empty { display: none; }
 .toast { min-height: 1.4em; font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--ink-soft); opacity: 0; transition: opacity .3s; }
 .toast.show { opacity: 1; }
 

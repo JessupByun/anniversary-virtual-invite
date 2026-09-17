@@ -7,6 +7,7 @@ const CONFIG = {
   yourName: 'Jessup',
   yourEmail: 'jessupb11@gmail.com',
   city: 'Los Angeles',
+  startFrom: 'our Airbnb in Inglewood',
   // The invite shows "Friday, October ~~20~~ 16, 2026" with the 20 scratched out.
   date: { prefix: 'Friday, October', crossedOut: '20', actual: '16', year: '2026' },
   dateShort: 'Oct 16, 2026',
@@ -74,35 +75,41 @@ const CONFIG = {
   // Each chapter = 2 options. Images live at img/places/<id>.jpg
   // `favorite: true` is where "pick for me" lands. `decoy: true` snaps to the `locked` option.
   chapters: [
-    { id: 'latte', title: 'chapter 1 · morning coffee', question: 'first, caffeine. lattes from:',
+    { id: 'coffee', title: 'chapter 1 · morning coffee', question: 'first, caffeine.',
       options: [
-        { id: 'damo', name: 'Damo', blurb: 'the OG #1', favorite: true },
-        { id: 'cg', name: 'Community Goods', blurb: 'the best in the world' },
+        { id: 'cg', name: 'Community Goods', blurb: 'the best in the world', locked: true, favorite: true },
+        { id: 'damo', name: 'Damo', blurb: 'the OG #1', decoy: true, decoyText: 'close. but today it\'s Community Goods.' },
       ] },
-    { id: 'brunch', title: 'chapter 2 · brunch', question: 'brunch spots.',
+    { id: 'walk', title: 'chapter 2 · a walk', question: 'somewhere to wander after coffee.',
       options: [
-        { id: 'republique', name: 'République', blurb: 'the pretty one on La Brea. we are getting the kouign-amann.', favorite: true },
-        { id: 'greatwhite', name: 'Great White', blurb: 'venice, avocado toast that is actually worth the hype' },
+        { id: 'melrose', name: 'Melrose', blurb: 'thrift stores, murals, and one very long walk', locked: true, favorite: true },
+        { id: 'rodeo', name: 'Rodeo Drive', blurb: 'window shopping we can\'t afford', decoy: true, decoyText: 'nope. we\'re walking Melrose.' },
       ] },
-    { id: 'afternoon', title: 'chapter 3 · afternoon', question: 'somewhere to wander.',
+    { id: 'lunch', title: 'chapter 3 · lunch', question: 'lunch spots.',
       options: [
-        { id: 'getty', name: 'The Getty Center', blurb: 'art, the garden maze, and the little tram we love for no reason', favorite: true },
-        { id: 'huntington', name: 'Huntington Gardens', blurb: 'rose garden first, japanese garden second, in that order' },
+        { id: 'kazunori', name: 'KazuNori', blurb: 'hand rolls at the counter. no talking until the toro.', locked: true, favorite: true },
+        { id: 'jonvinnys', name: 'Jon & Vinny\'s', blurb: 'the spicy fusilli, obviously', decoy: true, decoyText: 'tempting. but it\'s KazuNori.' },
       ] },
-    { id: 'golden', title: 'chapter 4 · golden hour', question: 'where do we watch the sun go down?',
+    { id: 'museum', title: 'chapter 4 · afternoon', question: 'a museum.',
       options: [
-        { id: 'santamonica', name: 'Santa Monica Pier', blurb: 'the ferris wheel at sunset, snacks on the sand like last time' },
-        { id: 'griffith', name: 'Griffith Observatory', blurb: 'city views, and we pretend to know constellations', favorite: true },
+        { id: 'academy', name: 'Academy Museum', blurb: 'of motion pictures. the sphere, the oscars, all of it.', locked: true, favorite: true },
+        { id: 'lacma', name: 'LACMA', blurb: 'urban light, right next door', decoy: true, decoyText: 'so close. it\'s the Academy Museum.' },
       ] },
-    { id: 'dinner', title: 'chapter 5 · dinner', question: 'and for dinner…',
+    { id: 'stroll', title: 'chapter 5 · golden hour', question: 'a little stroll before dinner.',
+      options: [
+        { id: 'grove', name: 'The Grove', blurb: 'the trolley, the fountain, the farmers market', locked: true, favorite: true },
+        { id: 'americana', name: 'The Americana', blurb: 'the grove, but glendale', decoy: true, decoyText: 'nope. the Grove.' },
+      ] },
+    { id: 'dinner', title: 'chapter 6 · dinner', question: 'and for dinner…',
       options: [
         { id: 'lawrys', name: 'Lawry\'s The Prime Rib', blurb: 'the silver cart. the spinning salad bowl. the yorkshire pudding.', time: '6:30 pm', locked: true, favorite: true },
-        { id: 'other', name: 'Somewhere else?', blurb: 'surely there are other options…', decoy: true, decoyText: 'nope. reservation\'s already made. Lawry\'s, 6:30.' },
+        { id: 'other', name: 'Somewhere else?', blurb: 'surely there are other options…', decoy: true, noPhoto: true, decoyText: 'nope. reservation\'s already made. Lawry\'s, 6:30.' },
       ] },
-    { id: 'dessert', title: 'chapter 6 · after', question: 'last stop. sweet or scenic?',
+    { id: 'dessert', title: 'chapter 7 · dessert in k-town', question: 'this one is actually your call.',
       options: [
-        { id: 'saltstraw', name: 'Salt & Straw', blurb: 'larchmont, two scoops, we share (i lie)', favorite: true },
-        { id: 'drive', name: 'Night drive + a view', blurb: 'mulholland, windows down, our playlist' },
+        { id: 'bingsoo', name: 'Bingsoo', blurb: 'shaved ice, the usual', favorite: true },
+        { id: 'icecream', name: 'Ice cream', blurb: 'two scoops, we share (i lie)' },
+        { id: 'drink', name: 'A drink', blurb: 'warm or iced, you pick' },
       ] },
   ],
 };
@@ -423,12 +430,12 @@ function runLoader() {
    ============================================================ */
 let toastTimer;
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }
-function optImg(o) { return o.decoy ? `<div class="opt-img"><span class="q">?</span></div>` : `<div class="opt-img"><img src="img/places/${o.id}.jpg" alt="${o.name}" loading="lazy" /></div>`; }
+function optImg(o) { return o.noPhoto ? `<div class="opt-img"><span class="q">?</span></div>` : `<div class="opt-img"><img src="img/places/${o.id}.jpg" alt="${o.name}" loading="lazy" /></div>`; }
 function renderChapter() {
   const ch = CONFIG.chapters[state.chapter]; if (!ch) { go('ticket'); return; }
   $('#dots').innerHTML = CONFIG.chapters.map((_, i) => `<span class="dot ${i < state.chapter ? 'done' : ''} ${i === state.chapter ? 'now' : ''}"></span>`).join('');
   $('#ch-title').textContent = ch.title; $('#ch-question').textContent = ch.question;
-  const wrap = $('#options'); wrap.innerHTML = ''; $('#toast').classList.remove('show');
+  const wrap = $('#options'); wrap.innerHTML = ''; wrap.classList.toggle('three', ch.options.length > 2); $('#toast').classList.remove('show');
   ch.options.forEach(o => {
     const d = document.createElement('div'); d.className = 'option'; d.dataset.id = o.id;
     d.innerHTML = `${optImg(o)}<p class="opt-name">${o.name}</p><p class="opt-blurb">${o.blurb}</p>${o.time ? `<span class="opt-time">${o.time}</span>` : ''}`;
@@ -460,14 +467,14 @@ $('#btn-ch-next').addEventListener('click', () => { if (!state.picks[CONFIG.chap
 function timeLabel() { const t = CONFIG.startTimes.find(x => x.v === state.time); return t ? t.t : '—'; }
 function itinerary() { return CONFIG.chapters.map(ch => { const o = ch.options.find(x => x.id === state.picks[ch.id]) || ch.options.find(x => x.locked) || ch.options[0]; return { chapter: ch.title.split('·').pop().trim(), ...o }; }); }
 function renderTicket() {
-  $('#t-date').textContent = CONFIG.dateShort; $('#t-time').textContent = timeLabel(); $('#t-city').textContent = CONFIG.city;
+  $('#t-date').textContent = CONFIG.dateShort; $('#t-from').textContent = CONFIG.startFrom ? 'starting from ' + CONFIG.startFrom : ''; $('#t-time').textContent = timeLabel(); $('#t-city').textContent = CONFIG.city;
   $('#t-stamp').innerHTML = `<img src="${CONFIG.stampPhoto}" alt="" />`;
   $('#t-list').innerHTML = itinerary().map(o => `<li><div class="tl-img"><img src="img/places/${o.id}.jpg" alt="" /></div><div><p class="tl-chapter">${o.chapter}</p><p class="tl-name">${o.name}${o.time ? `<small>${o.time}</small>` : ''}</p></div></li>`).join('');
   if (state.rsvp) afterRsvp();
 }
 function afterRsvp() { $('#rsvp-block').classList.add('hidden'); $('#after-rsvp').classList.remove('hidden'); $('#closing-line').textContent = CONFIG.closingLine; }
 $('#btn-rsvp').addEventListener('click', () => { state.rsvp = true; save(); fireworks(7); afterRsvp(); });
-function plainItinerary() { const lines = itinerary().map((o, i) => `${i + 1}. ${o.chapter}: ${o.name}${o.time ? ' @ ' + o.time : ''}`); return `${CONFIG.herName} RSVP'd YES.\n\nYear 3 Anniversary\n${CONFIG.date.prefix} ${CONFIG.date.actual}, ${CONFIG.date.year} · ${CONFIG.city}\nWe leave: ${timeLabel()}\n\n${lines.join('\n')}\n`; }
+function plainItinerary() { const lines = itinerary().map((o, i) => `${i + 1}. ${o.chapter}: ${o.name}${o.time ? ' @ ' + o.time : ''}`); return `${CONFIG.herName} RSVP'd YES.\n\nYear 3 Anniversary\n${CONFIG.date.prefix} ${CONFIG.date.actual}, ${CONFIG.date.year} · ${CONFIG.city}\nWe leave: ${timeLabel()} from ${CONFIG.startFrom}\n\n${lines.join('\n')}\n`; }
 $('#btn-send').addEventListener('click', () => { const her = $('#her-email').value.trim(); location.href = `mailto:${CONFIG.yourEmail}${her ? '?cc=' + encodeURIComponent(her) + '&' : '?'}subject=${encodeURIComponent(CONFIG.herName + ' said yes — year 3 anniversary date')}&body=${encodeURIComponent(plainItinerary())}`; });
 $('#btn-save').addEventListener('click', async () => {
   const b = $('#btn-save'); b.textContent = 'saving…';
@@ -486,6 +493,8 @@ $('#secret-heart').addEventListener('click', (e) => {
 });
 $('#btn-secret-close').addEventListener('click', () => $('#secret-modal').classList.add('hidden'));
 let footTaps = 0; $('#foot').addEventListener('click', () => { if (++footTaps >= 5) { localStorage.removeItem(STORE_KEY); location.href = location.pathname; } });
+// missing place photo → neutral placeholder instead of a broken image
+document.addEventListener('error', (e) => { const t = e.target; if (t.tagName !== 'IMG') return; if (t.closest('.opt-img')) t.parentNode.innerHTML = '<span class="q">?</span>'; else if (t.closest('.tl-img')) t.remove(); }, true);
 $$('.her-name').forEach(e => e.textContent = CONFIG.herName); $$('.her-emoji').forEach(e => e.textContent = CONFIG.herEmoji); $$('.your-name').forEach(e => e.textContent = CONFIG.yourName);
 document.title = `For ${CONFIG.herName} ${CONFIG.herEmoji}`;
 (function init() {
