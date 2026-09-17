@@ -105,7 +105,7 @@ const CONFIG = {
         { id: 'lawrys', name: 'Lawry\'s The Prime Rib', blurb: 'thick cuts of prime rib & giant armchairs', time: '6:30 pm', locked: true, favorite: true },
         { id: 'other', name: 'Somewhere else?', blurb: 'surely there are other options…', decoy: true, noPhoto: true, decoyText: 'nope. reservation\'s already made. Lawry\'s, 6:30.' },
       ] },
-    { id: 'dessert', title: 'chapter 7 · dessert in k-town', question: 'this one is actually your call.', tease: 'no really. a real choice. i checked.',
+    { id: 'dessert', title: 'chapter 7 · dessert in k-town', question: 'this one is actually your call.', tease: 'you can have whatever dessert you\'d like',
       options: [
         { id: 'bingsoo', name: 'Bingsoo', blurb: 'oakobing or sul & beans or anko', favorite: true },
         { id: 'icecream', name: 'Ice cream', blurb: 'bumsan, holy rolly, matsu matcha' },
