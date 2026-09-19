@@ -8,7 +8,7 @@ if (typeof CONFIG === 'undefined') { document.body.innerHTML = '<p style="font-f
 /* ============================================================
    STATE
    ============================================================ */
-const STORE_KEY = 'yunji-invite-v2';
+const STORE_KEY = 'invite-progress-v2';
 let state = { screen: 'box', time: null, chapter: 0, picks: {}, rsvp: false };
 try {
   if (location.search.includes('reset')) localStorage.removeItem(STORE_KEY);
