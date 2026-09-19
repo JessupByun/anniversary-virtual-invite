@@ -1,123 +1,9 @@
 /* ============================================================
-   CONFIG — everything personal lives here. Edit freely.
+   CONFIG is loaded from config.js (git-ignored, personal).
+   Copy config.example.js → config.js and fill it in.
    ============================================================ */
-const CONFIG = {
-  herName: 'Yunji',
-  herEmoji: '❤️🍀',
-  yourName: 'Jessup',
-  yourEmail: 'jessupb11@gmail.com',
-  city: 'Los Angeles',
-  startFrom: 'our Airbnb in Inglewood',
-  // The invite shows "Friday, October ~~20~~ 16, 2026" with the 20 scratched out.
-  date: { prefix: 'Friday, October', crossedOut: '20', actual: '16', year: '2026' },
-  dateShort: 'Oct 16, 2026',
-  fineprint: '',
-  closingLine: 'three years down… many more to come.',
-  secretText: 'you found the secret heart. three years of you being the best part of my every day. — J',
-  secretPhoto: 'img/album/p20.jpg',
-  secretCaption: '',
-  loaderPhoto: 'img/album/loader.jpg',
-  stampPhoto: 'img/album/p10.jpg',
+if (typeof CONFIG === 'undefined') { document.body.innerHTML = '<p style="font-family:sans-serif;padding:40px">Missing <code>config.js</code>. Copy <code>config.example.js</code> to <code>config.js</code> and fill it in.</p>'; throw new Error('config.js missing'); }
 
-  // Album — order matters. Captions are yours to rewrite.
-  album: [
-    { src: 'img/album/p03.jpg', cap: 'freshmen year photobooth' },
-    { src: 'img/album/p02.jpg', cap: 'CABO' },
-    { src: 'img/album/p01.jpg', cap: 'santa monica spring picnic' },
-    { src: 'img/album/p10.jpg', cap: 'standard procedure' },
-    { src: 'img/album/p13.jpg', cap: 'first impressions era' },
-    { src: 'img/album/p26.jpg', cap: 'usc adventures' },
-    { src: 'img/album/p12.jpg', cap: 'nyc summit one' },
-    { src: 'img/album/p16.jpg', cap: 'brooklyn' },
-    { src: 'img/album/p28.jpg', cap: 'our first valentines' },
-    { src: 'img/album/p04.jpg', cap: 'the best bouquet i made' },
-    { src: 'img/album/disneyland.jpg', cap: 'disneyland' },
-    { src: 'img/album/disneyland-pt-2.jpg', cap: 'disneyland pt. 2' },
-    { src: 'img/album/escape-room-mirror.jpg', cap: 'escape room mirror' },
-    { src: 'img/album/silverlake-photobooth.jpg', cap: 'silverlake photobooth' },
-    { src: 'img/album/p24.jpg', cap: 'SD beach' },
-    { src: 'img/album/p06.jpg', cap: 'SF' },
-    { src: 'img/album/palace-of-fine-arts.jpg', cap: 'palace of fine arts' },
-    { src: 'img/album/my-purchase.jpg', cap: 'my purchase' },
-    { src: 'img/album/chanelly.jpg', cap: 'chanelly' },
-    { src: 'img/album/p22.jpg', cap: 'the grove' },
-    { src: 'img/album/p07.jpg', cap: 'brunch this past spring' },
-    { src: 'img/album/p05.jpg', cap: 'kazu nori x getty' },
-    { src: 'img/album/p19.jpg', cap: 'the getty' },
-    { src: 'img/album/golfff.jpg', cap: 'golfff' },
-    { src: 'img/album/lake-tahoe-day-trip.jpg', cap: 'lake tahoe day trip' },
-    { src: 'img/album/p08.jpg', cap: 'me' },
-    { src: 'img/album/p09.jpg', cap: 'you' },
-    { src: 'img/album/p11.jpg', cap: 'MCO coffee' },
-    { src: 'img/album/p14.jpg', cap: 'you and newdle' },
-    { src: 'img/album/our-my-favorite-pizza.jpg', cap: 'our (my) favorite pizza' },
-    { src: 'img/album/yama.jpg', cap: 'yama' },
-    { src: 'img/album/p15.jpg', cap: 'our first ever' },
-    { src: 'img/album/halloween-2025.jpg', cap: 'halloween 2025' },
-    { src: 'img/album/p17.jpg', cap: 'me n angelines dino' },
-    { src: 'img/album/p18.jpg', cap: 'grad surprise party (ty)' },
-    { src: 'img/album/grad.jpg', cap: 'grad' },
-    { src: 'img/album/p21.jpg', cap: 'brentwood bacio' },
-    { src: 'img/album/p23.jpg', cap: 'old memories' },
-    { src: 'img/album/p25.jpg', cap: 'my 19th birthday gift' },
-    { src: 'img/album/p27.jpg', cap: 'rieber 7N lounge' },
-  ],
-
-  startTimes: [
-    { v: '09:00', t: '9:00 am',  l: 'early bird' },
-    { v: '09:30', t: '9:30 am',  l: 'ambitious' },
-    { v: '10:00', t: '10:00 am', l: 'reasonable' },
-    { v: '10:30', t: '10:30 am', l: 'the sweet spot' },
-    { v: '11:00', t: '11:00 am', l: 'sleep in (respect)' },
-    { v: '11:30', t: '11:30 am', l: 'brunch o\'clock' },
-  ],
-
-  // Each chapter = 2 options. Images live at img/places/<id>.jpg
-  // `favorite: true` is where "pick for me" lands. `decoy: true` snaps to the `locked` option.
-  chapters: [
-    { id: 'coffee', title: 'chapter 1 · morning coffee', question: 'first, caffeine.',
-      options: [
-        { id: 'cg', name: 'Community Goods', blurb: 'the best in the world', locked: true, favorite: true },
-        { id: 'damo', name: 'Damo', blurb: 'the OG #1', decoy: true, decoyText: 'close. but today it\'s Community Goods.' },
-      ] },
-    { id: 'walk', title: 'chapter 2 · a walk', question: 'somewhere to wander after coffee.',
-      options: [
-        { id: 'melrose', name: 'Melrose', blurb: 'should we buy some more madhappy?', locked: true, favorite: true },
-        { id: 'rodeo', name: 'Rodeo Drive', blurb: 'is it time for a chanel purse?', decoy: true, decoyText: 'nope. we\'re walking Melrose.' },
-      ] },
-    { id: 'lunch', title: 'chapter 3 · lunch', question: 'lunch spots.', tease: 'you\'re doing great. it really feels like you\'re choosing, right?',
-      options: [
-        { id: 'kazunori', name: 'KazuNori', blurb: 'delicious handrolls 🤤', locked: true, favorite: true },
-        { id: 'neighborly', name: 'Neighborly', blurb: 'you can\'t go wrong', decoy: true, decoyText: 'tempting. but it\'s KazuNori. you knew that.' },
-      ] },
-    { id: 'museum', title: 'chapter 4 · afternoon', question: 'a museum.', tease: 'fun fact: you have picked exactly zero things so far.',
-      options: [
-        { id: 'academy', name: 'Academy Museum', blurb: 'new spot!', locked: true, favorite: true },
-        { id: 'lacma', name: 'LACMA', blurb: 'old spot, and i already have a sticker', decoy: true, decoyText: 'so close. it\'s the Academy Museum. still not a choice.' },
-      ] },
-    { id: 'stroll', title: 'chapter 5 · golden hour', question: 'a little stroll before dinner.', tease: 'at this point the buttons are decorative.',
-      options: [
-        { id: 'grove', name: 'The Grove', blurb: 'my UCLA classic', locked: true, favorite: true },
-        { id: 'americana', name: 'The Americana', blurb: 'your hometown classic', decoy: true, decoyText: 'nope. the Grove. you can keep trying though, it\'s cute.' },
-      ] },
-    { id: 'dinner', title: 'chapter 6 · dinner', question: 'and for dinner…', tease: 'we both know how this one ends.',
-      options: [
-        { id: 'lawrys', name: 'Lawry\'s The Prime Rib', blurb: 'thick cuts of prime rib & giant armchairs', time: '6:30 pm', locked: true, favorite: true },
-        { id: 'other', name: 'Somewhere else?', blurb: 'surely there are other options…', decoy: true, noPhoto: true, decoyText: 'nope. reservation\'s already made. Lawry\'s, 6:30.' },
-      ] },
-    { id: 'dessert', title: 'chapter 7 · dessert in k-town', question: 'this one is actually your call.', tease: 'you can have whatever dessert you\'d like',
-      options: [
-        { id: 'bingsoo', name: 'Bingsoo', blurb: 'oakobing or sul & beans or anko', favorite: true },
-        { id: 'icecream', name: 'Ice cream', blurb: 'bumsan, holy rolly, matsu matcha' },
-        { id: 'drink', name: 'Drink', blurb: '3cat?? i want the mochi mango' },
-      ] },
-    { id: 'night', title: 'chapter 8 · night drive', question: 'one last view before i go back 😢', tease: 'a beautiful end to our busy busy day',
-      options: [
-        { id: 'figueroa', name: 'Figueroa & Centennial', blurb: 'i always wanted to go here', locked: true, favorite: true },
-        { id: 'griffith', name: 'Griffith Observatory', blurb: 'we\'ve been here plenty', decoy: true, decoyText: 'nope. Figueroa. trust me on this one.' },
-      ] },
-  ],
-};
 
 /* ============================================================
    STATE
@@ -504,7 +390,9 @@ let footTaps = 0; $('#foot').addEventListener('click', () => { if (++footTaps >=
 // missing place photo → neutral placeholder instead of a broken image
 document.addEventListener('error', (e) => { const t = e.target; if (t.tagName !== 'IMG') return; if (t.closest('.opt-img')) t.parentNode.innerHTML = '<span class="q">?</span>'; else if (t.closest('.tl-img')) t.remove(); }, true);
 $$('.her-name').forEach(e => e.textContent = CONFIG.herName); $$('.her-emoji').forEach(e => e.textContent = CONFIG.herEmoji); $$('.your-name').forEach(e => e.textContent = CONFIG.yourName);
-document.title = `For ${CONFIG.herName} ${CONFIG.herEmoji}`;
+document.title = `${CONFIG.appTitle} ${CONFIG.herEmoji}`;
+document.querySelector('meta[name="apple-mobile-web-app-title"]').content = CONFIG.appTitle;
+$('#greeting-text').textContent = CONFIG.greeting; $('#flower-note-text').innerHTML = CONFIG.flowerNote; $('#foot').textContent = CONFIG.footer;
 (function init() {
   const s = state.screen; document.body.dataset.screen = s || 'box';
   if (s && s !== 'box' && s !== 'loading') { $('.screen.active').classList.remove('active'); document.querySelector(`.screen[data-screen="${s}"]`).classList.add('active'); onEnter(s); }

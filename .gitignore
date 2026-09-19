@@ -1,4 +1,10 @@
+# personal content stays local
+config.js
+photos/
+img/album/
+img/places/
+og.jpg
+
+# system / tooling
 .DS_Store
 .claude/
-# original full-size photos stay local; web-sized copies live in img/album
-photos/
